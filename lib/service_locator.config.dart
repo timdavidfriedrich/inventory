@@ -20,6 +20,8 @@ import 'package:inventory/core/data/repositories/item_repository_impl.dart'
     as _i945;
 import 'package:inventory/core/domain/repositories/item_repository.dart'
     as _i1052;
+import 'package:inventory/core/presentation/app_router.dart' as _i143;
+import 'package:inventory/core/presentation/home_cubit.dart' as _i299;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +38,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i965.LocalDatabase.create(),
       preResolve: true,
     );
+    gh.factory<_i143.AppRouter>(() => _i143.AppRouter());
+    gh.factory<_i299.HomeCubit>(() => _i299.HomeCubit());
     gh.lazySingleton<_i834.LocalDatabaseDataSource>(() =>
         _i569.LocalDatabaseDataSourceImpl(
             localDatabase: gh<_i965.LocalDatabase>()));
