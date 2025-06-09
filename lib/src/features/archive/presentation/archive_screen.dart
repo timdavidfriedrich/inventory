@@ -11,8 +11,8 @@ class ArchiveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: context.isIos ? CupertinoNavigationBar() : AppBar(),
-      body: const Center(
-        child: Text("Archive"),
+      body: Center(
+        child: Text(context.s.screen_archive),
       ),
     );
   }

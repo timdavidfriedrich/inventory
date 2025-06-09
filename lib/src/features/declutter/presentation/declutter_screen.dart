@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/domain/entities/tab_screen.dart';
+import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
+import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
 class DeclutterScreen extends StatelessWidget with TabScreen {
   const DeclutterScreen({super.key});
 
   @override
-  String get tabLabel => "Declutter";
+  String tabLabel(context) => context.s.screen_declutter;
   @override
   Icon get tabIcon => const Icon(Icons.cleaning_services_outlined);
   @override
@@ -21,7 +22,7 @@ class DeclutterScreen extends StatelessWidget with TabScreen {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(tabLabel),
+        child: Text(context.s.screen_declutter),
       ),
     );
   }

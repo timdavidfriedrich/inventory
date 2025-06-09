@@ -15,7 +15,7 @@ class ScanScreen extends StatelessWidget {
       body: Center(
         child: FilledButton(
           onPressed: () => DetailsRoute().push(context),
-          child: const Text("Scan"),
+          child: Text(context.s.screen_scan),
         ),
       ),
     );

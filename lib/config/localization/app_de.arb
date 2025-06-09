@@ -1,0 +1,12 @@
+{
+ "@@locale": "de",
+ "appTitle": "Home Inventory",
+ "cancel": "Abbrechen",
+ "screen_overview": "Inventar",
+ "screen_declutter": "Ausmisten",
+ "screen_tasks": "Aufgaben",
+ "screen_archive": "Archiv",
+ "screen_settings": "Einstellungen",
+ "screen_scan": "Scanne ein Objekt",
+ "screen_details": "Objekt-Details"
+}

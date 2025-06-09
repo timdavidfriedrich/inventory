@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:inventory/src/core/domain/entities/tab_screen.dart';
+import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
 import 'package:inventory/src/core/presentation/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
@@ -10,7 +10,7 @@ class OverviewScreen extends StatelessWidget with TabScreen {
   const OverviewScreen({super.key});
 
   @override
-  String get tabLabel => "Overview";
+  String tabLabel(context) => context.s.screen_overview;
   @override
   Icon get tabIcon => const Icon(Icons.inventory_2_outlined);
   @override
@@ -25,7 +25,7 @@ class OverviewScreen extends StatelessWidget with TabScreen {
     return Scaffold(
       appBar: context.isIos ? const _CupertinoAppBar() : const _MaterialAppBar(),
       body: Center(
-        child: Text(tabLabel),
+        child: Text(context.s.screen_overview),
       ),
       floatingActionButton: context.isIos
           ? null
@@ -78,23 +78,20 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
                 context.pop();
                 SettingsRoute().push(context);
               },
-              // TODO: Localize
-              child: const Text("Settings"),
+              child: Text(context.s.screen_settings),
             ),
             CupertinoActionSheetAction(
               onPressed: () {
                 context.pop();
                 ArchiveRoute().push(context);
               },
-              // TODO: Localize
-              child: const Text("Archive"),
+              child: Text(context.s.screen_archive),
             ),
           ],
           cancelButton: CupertinoActionSheetAction(
             onPressed: () => Navigator.of(context).pop(),
             isDefaultAction: true,
-            // TODO: Localize
-            child: Text("Cancel"),
+            child: Text(context.s.cancel),
           ),
         ),
       );
@@ -111,7 +108,7 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
         onTap: () => ScanRoute().push(context),
         child: Icon(
           CupertinoIcons.plus_rectangle_fill,
-          color: Theme.of(context).colorScheme.primary,
+          color: context.c.primary,
           size: Dimensions.semiExtraLargeIconSize,
         ),
       ),

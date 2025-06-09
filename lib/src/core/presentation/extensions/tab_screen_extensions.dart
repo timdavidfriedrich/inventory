@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/domain/entities/tab_screen.dart';
+import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 
 extension TabScreenExtensions on TabScreen {
-  NavigationDestination get materialDestination {
+  NavigationDestination getMaterialDestination(BuildContext context) {
     return NavigationDestination(
       selectedIcon: tabSelectedIcon,
       icon: tabIcon,
-      label: tabLabel,
+      label: tabLabel(context),
     );
   }
 
-  BottomNavigationBarItem get cupertinoDestination {
+  BottomNavigationBarItem getCupertinoDestination(BuildContext context) {
     return BottomNavigationBarItem(
       icon: tabCupertinoIcon,
       activeIcon: tabCupertinoSelectedIcon,
-      label: tabLabel,
+      label: tabLabel(context),
     );
   }
 }

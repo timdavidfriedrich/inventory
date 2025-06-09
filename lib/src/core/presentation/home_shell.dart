@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inventory/src/core/domain/entities/tab_screen.dart';
+import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/extensions/tab_screen_extensions.dart';
 import 'package:inventory/src/core/presentation/home_cubit.dart';
@@ -51,7 +51,7 @@ class _MaterialNavigationBar extends StatelessWidget {
         return NavigationBar(
           selectedIndex: index,
           destinations: _tabScreens.map((tabScreen) {
-            return tabScreen.materialDestination;
+            return tabScreen.getMaterialDestination(context);
           }).toList(),
           onDestinationSelected: (value) {
             context.read<HomeCubit>().selectTab(value);
@@ -71,7 +71,7 @@ class _CupertinoNavigationBar extends StatelessWidget {
       builder: (context, index) {
         return CupertinoTabBar(
           items: _tabScreens.map((tabScreen) {
-            return tabScreen.cupertinoDestination;
+            return tabScreen.getCupertinoDestination(context);
           }).toList(),
           currentIndex: index,
           onTap: (value) {

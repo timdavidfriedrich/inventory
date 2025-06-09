@@ -11,8 +11,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: context.isIos ? CupertinoNavigationBar() : AppBar(),
-      body: const Center(
-        child: Text("Settings"),
+      body: Center(
+        child: Text(context.s.screen_settings),
       ),
     );
   }

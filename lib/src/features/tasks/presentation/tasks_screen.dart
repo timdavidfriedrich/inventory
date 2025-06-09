@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/domain/entities/tab_screen.dart';
+import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
+import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
 class TasksScreen extends StatelessWidget with TabScreen {
   const TasksScreen({super.key});
 
   @override
-  String get tabLabel => "Tasks";
+  String tabLabel(context) => context.s.screen_tasks;
   @override
   Icon get tabIcon => const Icon(Icons.fact_check_outlined);
   @override
@@ -20,7 +21,7 @@ class TasksScreen extends StatelessWidget with TabScreen {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(tabLabel),
+        child: Text(context.s.screen_tasks),
       ),
     );
   }

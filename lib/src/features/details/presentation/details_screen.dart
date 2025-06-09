@@ -13,8 +13,8 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: context.isIos ? CupertinoNavigationBar() : AppBar(),
-      body: const Center(
-        child: Text("Details"),
+      body: Center(
+        child: Text(context.s.screen_details),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go(HomeRoute().location),
