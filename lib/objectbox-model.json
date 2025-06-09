@@ -1,0 +1,207 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6853882972704750866",
+      "lastPropertyId": "5:932579400851393814",
+      "name": "LdbGroup",
+      "properties": [
+        {
+          "id": "1:2937731558704870221",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1627106399561563538",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:2994436730940823030",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:2419288585542955910",
+          "name": "imageBytes",
+          "type": 27
+        },
+        {
+          "id": "5:932579400851393814",
+          "name": "subGroupId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:1776741205852147541",
+          "relationTarget": "LdbGroup"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:1080030442287171865",
+      "lastPropertyId": "7:3502795990010228169",
+      "name": "LdbItem",
+      "properties": [
+        {
+          "id": "1:4453702718778559637",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7088229138213660982",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1159076210894445184",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:9088985971940859816",
+          "name": "imageBytes",
+          "type": 27
+        },
+        {
+          "id": "5:4008363200067282034",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "6:729182457716138699",
+          "name": "condition",
+          "type": 5
+        },
+        {
+          "id": "7:3502795990010228169",
+          "name": "locationId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:7592040704796605311",
+          "relationTarget": "LdbLocation"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:2078028015223251829",
+      "lastPropertyId": "3:6887709095693850221",
+      "name": "LdbLocation",
+      "properties": [
+        {
+          "id": "1:3946750777942251374",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2829017946624001641",
+          "name": "roomId",
+          "type": 6
+        },
+        {
+          "id": "3:6887709095693850221",
+          "name": "groupId",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:8140131509334363252",
+      "lastPropertyId": "3:131888576371937401",
+      "name": "LdbMoveTask",
+      "properties": [
+        {
+          "id": "1:9017396925867865846",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:949425361189232594",
+          "name": "itemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:9166197447287741527",
+          "relationTarget": "LdbItem"
+        },
+        {
+          "id": "3:131888576371937401",
+          "name": "destinationId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:6087557479809661494",
+          "relationTarget": "LdbLocation"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:7666764285948910825",
+      "lastPropertyId": "4:8463476478924965799",
+      "name": "LdbRoom",
+      "properties": [
+        {
+          "id": "1:6704368999236519522",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1643975182789207885",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:9146700533660021457",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:8463476478924965799",
+          "name": "imageBytes",
+          "type": 27
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:7880473287807900153",
+      "lastPropertyId": "2:1506755906974476800",
+      "name": "LdbTossTask",
+      "properties": [
+        {
+          "id": "1:7042760143053891643",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1506755906974476800",
+          "name": "itemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:2829190920006502094",
+          "relationTarget": "LdbItem"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "6:7880473287807900153",
+  "lastIndexId": "5:2829190920006502094",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

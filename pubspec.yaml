@@ -26,6 +26,8 @@ dependencies:
   # Database
   objectbox: ^4.3.0
   objectbox_flutter_libs: any
+  path: ^1.9.1
+  path_provider: ^2.1.5
 
   # Dependency Injection
   get_it: ^8.0.3
@@ -57,6 +59,9 @@ dev_dependencies:
 
   # Database
   objectbox_generator: any
+
+  # Dependency injection
+  injectable_generator: ^2.5.0
 
   # Helpers
   build_runner: ^2.4.15
