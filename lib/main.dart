@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventory/core/presentation/app_router.dart';
+import 'package:inventory/config/theme/app_theme.dart';
+import 'package:inventory/src/core/presentation/app_router.dart';
 import 'package:inventory/service_locator.dart';
 
 Future<void> main() async {
@@ -16,14 +17,8 @@ class InventoryApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: sl<AppRouter>().router,
-      theme: ThemeData(
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
     );
   }
 }
