@@ -66,6 +66,9 @@ dev_dependencies:
   # Helpers
   build_runner: ^2.4.15
 
+  # Navigation and Routing
+  go_router_builder: ^3.0.0
+
 
 flutter:
   uses-material-design: true

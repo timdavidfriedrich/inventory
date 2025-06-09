@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/core/presentation/app_router.dart';
 import 'package:inventory/service_locator.dart';
 
 Future<void> main() async {
@@ -12,18 +13,17 @@ class InventoryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      routerConfig: sl<AppRouter>().router,
+      theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
+      ),
     );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("Inventory")));
   }
 }
