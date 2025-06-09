@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/service_locator.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const InventoryApp());
 }
 
@@ -9,7 +12,10 @@ class InventoryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const HomeScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
+    );
   }
 }
 
