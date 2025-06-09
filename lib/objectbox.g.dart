@@ -14,12 +14,12 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'core/data/models/ldb_group.dart';
-import 'core/data/models/ldb_item.dart';
-import 'core/data/models/ldb_location.dart';
-import 'core/data/models/ldb_move_task.dart';
-import 'core/data/models/ldb_room.dart';
-import 'core/data/models/ldb_toss_task.dart';
+import 'src/core/data/models/ldb_group.dart';
+import 'src/core/data/models/ldb_item.dart';
+import 'src/core/data/models/ldb_location.dart';
+import 'src/core/data/models/ldb_move_task.dart';
+import 'src/core/data/models/ldb_room.dart';
+import 'src/core/data/models/ldb_toss_task.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 

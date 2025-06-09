@@ -33,6 +33,11 @@ dependencies:
   get_it: ^8.0.3
   injectable: ^2.5.0
 
+  # Internationalization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
   # Navigation and Routing
   go_router: ^15.1.3
 
@@ -72,3 +77,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

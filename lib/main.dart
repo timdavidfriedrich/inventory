@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inventory/core/presentation/app_router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:inventory/config/localization/app_localizations.dart';
+import 'package:inventory/config/theme/app_theme.dart';
+import 'package:inventory/src/core/presentation/app_router.dart';
 import 'package:inventory/service_locator.dart';
+import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +18,18 @@ class InventoryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       routerConfig: sl<AppRouter>().router,
-      theme: ThemeData(
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      debugShowCheckedModeBanner: false,
+      onGenerateTitle: (context) => context.s.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
