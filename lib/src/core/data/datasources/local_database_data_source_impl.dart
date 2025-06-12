@@ -28,7 +28,10 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   }
 
   @override
-  Future<void> deleteItem(int itemId) async {
-    _itemBox.remove(itemId);
+  Future<void> deleteItem(LdbItem item) async {
+    if (item.id == 0) {
+      throw Exception("Cannot delete item with id 0");
+    }
+    _itemBox.remove(item.id);
   }
 }

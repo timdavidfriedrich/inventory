@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inventory/src/core/data/datasources/local_database_data_source.dart';
 import 'package:inventory/src/core/data/mappers/item_mappers.dart';
@@ -19,8 +20,8 @@ class ItemRepositoryImpl implements ItemRepository {
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
       return AppResult.success(items);
     }).handleError((error, stackTrace) {
-      // TODO: Replace print with custom log class
-      print('Error in watchItems stream: $error');
+      // TODO: Replace debugPrint with custom log class
+      debugPrint('Error in watchItems stream: $error');
       return AppResult.error(Exception(error));
     });
   }
@@ -29,6 +30,9 @@ class ItemRepositoryImpl implements ItemRepository {
   Future<AppResult<void>> saveItem(Item item) async {
     try {
       final ldbItem = item.toLdbItem();
+      if (ldbItem == null) {
+        return AppResult.error(Exception("Invalid LdbItem: $ldbItem"));
+      }
       await _localDataSource.upsertItem(ldbItem);
       return const AppResult.success(null);
     } catch (e) {
@@ -37,9 +41,17 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  Future<AppResult<void>> deleteItem(int itemId) async {
+  Future<AppResult<void>> deleteItem(Item item) async {
     try {
-      await _localDataSource.deleteItem(itemId);
+      final ldbItem = item.toLdbItem();
+      if (ldbItem == null) {
+        return AppResult.error(Exception("Invalid LdbItem: $ldbItem"));
+      }
+      try {
+        await _localDataSource.deleteItem(ldbItem);
+      } catch (e) {
+        return AppResult.error(Exception("Failed to delete item: $e"));
+      }
       return const AppResult.success(null);
     } catch (e) {
       return AppResult.error(Exception(e));

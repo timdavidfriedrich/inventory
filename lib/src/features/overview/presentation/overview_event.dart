@@ -5,14 +5,9 @@ sealed class OverviewEvent {
   const OverviewEvent();
 }
 
-class OverviewItemsUpdated extends OverviewEvent {
+class OverviewRefreshItems extends OverviewEvent {
   final AppResult<List<Item>> result;
-  const OverviewItemsUpdated(this.result);
-}
-
-class OverviewSaveItem extends OverviewEvent {
-  final Item item;
-  const OverviewSaveItem(this.item);
+  const OverviewRefreshItems(this.result);
 }
 
 class OverviewDeleteItem extends OverviewEvent {
