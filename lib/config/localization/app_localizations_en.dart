@@ -12,6 +12,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
+  String get error_general => 'An error occurred.\nPlease try again later.';
+
+  @override
   String get cancel => 'Cancel';
 
   @override

@@ -1,6 +1,7 @@
 {
  "@@locale": "en",
  "appTitle": "Home Inventory",
+ "error_general": "An error occurred.\nPlease try again later.",
  "cancel": "Cancel",
  "screen_overview": "Inventory",
  "screen_declutter": "Declutter",

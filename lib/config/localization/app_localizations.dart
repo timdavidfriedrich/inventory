@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Home Inventory'**
   String get appTitle;
 
+  /// No description provided for @error_general.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred.\nPlease try again later.'**
+  String get error_general;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:

@@ -12,6 +12,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
+  String get error_general =>
+      'Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.';
+
+  @override
   String get cancel => 'Abbrechen';
 
   @override

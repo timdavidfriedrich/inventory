@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inventory/service_locator.dart';
 import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
 import 'package:inventory/src/core/presentation/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
+import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
+import 'package:inventory/src/features/overview/presentation/overview_bloc.dart';
+import 'package:inventory/src/features/overview/presentation/overview_state.dart';
 
 class OverviewScreen extends StatelessWidget with TabScreen {
   const OverviewScreen({super.key});
@@ -24,8 +29,30 @@ class OverviewScreen extends StatelessWidget with TabScreen {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: context.isIos ? const _CupertinoAppBar() : const _MaterialAppBar(),
-      body: Center(
-        child: Text(context.s.screen_overview),
+      body: BlocProvider<OverviewBloc>(
+        create: (_) => sl<OverviewBloc>(),
+        child: BlocBuilder<OverviewBloc, OverviewState>(
+          builder: (context, state) {
+            return switch (state) {
+              OverviewLoading() => const Center(child: CircularProgressIndicator.adaptive()),
+              OverviewError() => Center(child: const VerticalErrorWidget()),
+              OverviewSuccess(:var items) => ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ListTile(
+                      title: Text(item.name),
+                      subtitle: item.description != null ? Text(item.description!) : null,
+                      leading: item.image != null
+                          ? Image.memory(item.image!)
+                          : const Icon(Icons.image_not_supported_outlined),
+                      onTap: () => DetailsRoute().push(context),
+                    );
+                  },
+                ),
+            };
+          },
+        ),
       ),
       floatingActionButton: context.isIos
           ? null

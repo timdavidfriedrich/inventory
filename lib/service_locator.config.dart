@@ -21,8 +21,14 @@ import 'package:inventory/src/core/data/repositories/item_repository_impl.dart'
     as _i680;
 import 'package:inventory/src/core/domain/repositories/item_repository.dart'
     as _i568;
+import 'package:inventory/src/core/domain/usecases/item/get_all_items_use_case.dart'
+    as _i274;
+import 'package:inventory/src/core/domain/usecases/item/save_item_use_case.dart'
+    as _i413;
 import 'package:inventory/src/core/presentation/app_router.dart' as _i249;
 import 'package:inventory/src/core/presentation/home_cubit.dart' as _i753;
+import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
+    as _i364;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -46,6 +52,14 @@ extension GetItInjectableX on _i174.GetIt {
             localDatabase: gh<_i186.LocalDatabase>()));
     gh.lazySingleton<_i568.ItemRepository>(() => _i680.ItemRepositoryImpl(
         localDataSource: gh<_i653.LocalDatabaseDataSource>()));
+    gh.factory<_i274.GetAllItemsUseCase>(
+        () => _i274.GetAllItemsUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i413.SaveItemUseCase>(
+        () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i364.OverviewBloc>(() => _i364.OverviewBloc(
+          getAllItemsUseCase: gh<_i274.GetAllItemsUseCase>(),
+          saveItemUseCase: gh<_i413.SaveItemUseCase>(),
+        ));
     return this;
   }
 }
