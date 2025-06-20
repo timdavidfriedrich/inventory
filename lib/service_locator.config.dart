@@ -21,8 +21,8 @@ import 'package:inventory/src/core/data/repositories/item_repository_impl.dart'
     as _i680;
 import 'package:inventory/src/core/domain/repositories/item_repository.dart'
     as _i568;
-import 'package:inventory/src/core/domain/usecases/item/delete_item_use_case.dart'
-    as _i302;
+import 'package:inventory/src/core/domain/usecases/item/archive_item_use_case.dart'
+    as _i12;
 import 'package:inventory/src/core/domain/usecases/item/get_all_items_use_case.dart'
     as _i274;
 import 'package:inventory/src/core/domain/usecases/item/get_item_by_id_use_case.dart'
@@ -60,21 +60,19 @@ extension GetItInjectableX on _i174.GetIt {
         localDataSource: gh<_i653.LocalDatabaseDataSource>()));
     gh.factory<_i274.GetAllItemsUseCase>(
         () => _i274.GetAllItemsUseCase(repository: gh<_i568.ItemRepository>()));
-    gh.factory<_i302.DeleteItemUseCase>(
-        () => _i302.DeleteItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i413.SaveItemUseCase>(
         () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i989.GetItemByIdUseCase>(
         () => _i989.GetItemByIdUseCase(repository: gh<_i568.ItemRepository>()));
-    gh.factory<_i364.OverviewBloc>(() => _i364.OverviewBloc(
-          gh<_i274.GetAllItemsUseCase>(),
-          gh<_i302.DeleteItemUseCase>(),
-        ));
+    gh.factory<_i12.ArchiveItemUseCase>(
+        () => _i12.ArchiveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i778.DetailsBloc>(() => _i778.DetailsBloc(
           gh<_i989.GetItemByIdUseCase>(),
           gh<_i413.SaveItemUseCase>(),
-          gh<_i302.DeleteItemUseCase>(),
+          gh<_i12.ArchiveItemUseCase>(),
         ));
+    gh.factory<_i364.OverviewBloc>(
+        () => _i364.OverviewBloc(gh<_i274.GetAllItemsUseCase>()));
     return this;
   }
 }

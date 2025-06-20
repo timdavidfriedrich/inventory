@@ -8,6 +8,7 @@ part 'item.freezed.dart';
 abstract class Item with _$Item {
   const factory Item({
     int? id,
+    @Default(false) bool isArchived,
     @Default("") String name,
     String? notes,
     Uint8List? image,

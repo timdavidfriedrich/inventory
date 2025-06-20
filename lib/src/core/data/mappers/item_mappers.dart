@@ -7,6 +7,7 @@ extension LdbItemMapper on LdbItem {
   Item toItem() {
     return Item(
       id: id,
+      isArchived: isArchived,
       name: name,
       image: imageBytes != null ? Uint8List.fromList(imageBytes!) : null,
       tags: tags,
@@ -27,6 +28,7 @@ extension ItemMapper on Item {
     }
     final ldbItem = LdbItem(
       name: name,
+      isArchived: isArchived,
       imageBytes: image,
       tags: tags,
       suggestedTags: suggestedTags,

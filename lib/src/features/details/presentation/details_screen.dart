@@ -11,7 +11,7 @@ import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/error_screen.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/loading_screen.dart';
-import 'package:inventory/src/core/presentation/widgets/delete_item_confirm_dialog.dart';
+import 'package:inventory/src/core/presentation/widgets/archive_item_confirm_dialog.dart';
 import 'package:inventory/src/core/presentation/widgets/floating_toolbar.dart';
 import 'package:inventory/src/features/details/presentation/details_bloc.dart';
 import 'package:inventory/src/features/details/presentation/details_event.dart';
@@ -276,9 +276,9 @@ class _FloatingActionButtons extends StatelessWidget {
           children: [
             FloatingToolbarButton(
               onPressed: () {
-                DeleteItemConfirmDialog.show(context).then((confirmed) {
+                ArchiveItemConfirmDialog.show(context).then((confirmed) {
                   if (confirmed == true && context.mounted) {
-                    context.read<DetailsBloc>().add(DetailsDeleteItem());
+                    context.read<DetailsBloc>().add(DetailsArchiveItem());
                   }
                 });
               },

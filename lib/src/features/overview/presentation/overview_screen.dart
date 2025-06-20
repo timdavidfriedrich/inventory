@@ -41,12 +41,10 @@ class OverviewScreen extends StatelessWidget with TabScreen {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return ListTile(
+                      onTap: () => DetailsRoute(id: item.id).push(context),
+                      leading: const Icon(Icons.image_not_supported_outlined),
                       title: Text(item.name),
                       subtitle: item.notes != null ? Text(item.notes!) : null,
-                      leading: item.image != null
-                          ? Image.memory(item.image!)
-                          : const Icon(Icons.image_not_supported_outlined),
-                      onTap: () => DetailsRoute(id: item.id).push(context),
                     );
                   },
                 ),

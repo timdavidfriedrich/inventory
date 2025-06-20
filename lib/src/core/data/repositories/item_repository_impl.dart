@@ -71,4 +71,34 @@ class ItemRepositoryImpl implements ItemRepository {
       return AppResult.error(Exception(e));
     }
   }
+
+  @override
+  Future<AppResult<void>> archiveItem(Item item) async {
+    try {
+      final updatedItem = item.copyWith(isArchived: true);
+      final ldbItem = updatedItem.toLdbItem();
+      if (ldbItem == null) {
+        return AppResult.error(Exception("Invalid LdbItem: $ldbItem"));
+      }
+      await _localDataSource.upsertItem(ldbItem);
+      return const AppResult.success(null);
+    } catch (e) {
+      return AppResult.error(Exception(e));
+    }
+  }
+
+  @override
+  Future<AppResult<void>> unarchiveItem(Item item) async {
+    try {
+      final updatedItem = item.copyWith(isArchived: false);
+      final ldbItem = updatedItem.toLdbItem();
+      if (ldbItem == null) {
+        return AppResult.error(Exception("Invalid LdbItem: $ldbItem"));
+      }
+      await _localDataSource.upsertItem(ldbItem);
+      return const AppResult.success(null);
+    } catch (e) {
+      return AppResult.error(Exception(e));
+    }
+  }
 }

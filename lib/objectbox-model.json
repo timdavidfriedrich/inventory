@@ -42,7 +42,7 @@
     },
     {
       "id": "2:1080030442287171865",
-      "lastPropertyId": "9:3799800730157756838",
+      "lastPropertyId": "10:2443857576129355101",
       "name": "LdbItem",
       "properties": [
         {
@@ -88,6 +88,11 @@
           "id": "9:3799800730157756838",
           "name": "suggestedTags",
           "type": 30
+        },
+        {
+          "id": "10:2443857576129355101",
+          "name": "isArchived",
+          "type": 1
         }
       ],
       "relations": []

@@ -116,17 +116,17 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get common_cancel;
 
-  /// No description provided for @common_delete.
+  /// No description provided for @common_archive.
   ///
   /// In en, this message translates to:
-  /// **'Delete'**
-  String get common_delete;
+  /// **'Archive'**
+  String get common_archive;
 
-  /// No description provided for @common_delete_confirm.
+  /// No description provided for @common_archive_confirm.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to delete this item?'**
-  String get common_delete_confirm;
+  /// **'Are you sure you want to archive this item?'**
+  String get common_archive_confirm;
 
   /// No description provided for @common_save.
   ///

@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 class LdbItem {
   @Id()
   int id = 0;
-
+  bool isArchived;
   String name;
   String? notes;
   List<int>? imageBytes;
@@ -20,6 +20,7 @@ class LdbItem {
 
   LdbItem({
     this.id = 0,
+    this.isArchived = false,
     required this.name,
     this.notes,
     this.imageBytes,

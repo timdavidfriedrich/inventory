@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inventory/src/core/domain/entities/app_result.dart';
 import 'package:inventory/src/core/domain/entities/item.dart';
-import 'package:inventory/src/core/domain/usecases/item/delete_item_use_case.dart';
+import 'package:inventory/src/core/domain/usecases/item/archive_item_use_case.dart';
 import 'package:inventory/src/core/domain/usecases/item/get_item_by_id_use_case.dart';
 import 'package:inventory/src/core/domain/usecases/item/save_item_use_case.dart';
 import 'package:inventory/src/features/details/presentation/details_event.dart';
@@ -12,12 +12,12 @@ import 'package:inventory/src/features/details/presentation/details_state.dart';
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetItemByIdUseCase _getItemByIdUseCase;
   final SaveItemUseCase _saveItemUseCase;
-  final DeleteItemUseCase _deleteItemUseCase;
+  final ArchiveItemUseCase _archiveItemUseCase;
 
   DetailsBloc(
     this._getItemByIdUseCase,
     this._saveItemUseCase,
-    this._deleteItemUseCase,
+    this._archiveItemUseCase,
   ) : super(DetailsLoading()) {
     on<DetailsInit>(_init);
     on<DetailsUpdateName>(_updateName);
@@ -25,7 +25,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     on<DetailsAddTag>(_addTag);
     on<DetailsRemoveTag>(_removeTag);
     on<DetailsSaveItem>(_saveItem);
-    on<DetailsDeleteItem>(_deleteItem);
+    on<DetailsArchiveItem>(_archiveItem);
     on<DetailsManageView>((event, emit) {});
   }
 
@@ -108,10 +108,10 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     });
   }
 
-  void _deleteItem(DetailsDeleteItem event, Emitter<DetailsState> emit) {
+  void _archiveItem(DetailsArchiveItem event, Emitter<DetailsState> emit) {
     if (state is! DetailsSuccess) return;
     final currentState = state as DetailsSuccess;
-    _deleteItemUseCase(currentState.item).then((result) {
+    _archiveItemUseCase(currentState.item).then((result) {
       if (result is Success) {
         emit(const DetailsDone());
       } else if (result is Error) {

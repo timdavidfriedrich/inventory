@@ -4,14 +4,14 @@ import 'package:inventory/src/core/domain/entities/item.dart';
 import 'package:inventory/src/core/domain/repositories/item_repository.dart';
 
 @injectable
-class DeleteItemUseCase {
+class ArchiveItemUseCase {
   final ItemRepository _repository;
 
-  const DeleteItemUseCase({
+  const ArchiveItemUseCase({
     required ItemRepository repository,
   }) : _repository = repository;
 
   Future<AppResult<void>> call(Item item) async {
-    return await _repository.deleteItem(item);
+    return await _repository.archiveItem(item);
   }
 }

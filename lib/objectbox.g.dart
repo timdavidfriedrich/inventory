@@ -69,7 +69,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 1080030442287171865),
     name: 'LdbItem',
-    lastPropertyId: const obx_int.IdUid(9, 3799800730157756838),
+    lastPropertyId: const obx_int.IdUid(10, 2443857576129355101),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -120,6 +120,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(9, 3799800730157756838),
         name: 'suggestedTags',
         type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 2443857576129355101),
+        name: 'isArchived',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -380,7 +386,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final suggestedTagsOffset = fbb.writeList(
           object.suggestedTags.map(fbb.writeString).toList(growable: false),
         );
-        fbb.startTable(10);
+        fbb.startTable(11);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(3, imageBytesOffset);
@@ -389,6 +395,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(6, object.location.targetId);
         fbb.addOffset(7, notesOffset);
         fbb.addOffset(8, suggestedTagsOffset);
+        fbb.addBool(9, object.isArchived);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -400,6 +407,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           rootOffset,
           4,
           0,
+        );
+        final isArchivedParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          22,
+          false,
         );
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
@@ -426,6 +439,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         );
         final object = LdbItem(
           id: idParam,
+          isArchived: isArchivedParam,
           name: nameParam,
           notes: notesParam,
           imageBytes: imageBytesParam,
@@ -692,6 +706,11 @@ class LdbItem_ {
   /// See [LdbItem.suggestedTags].
   static final suggestedTags = obx.QueryStringVectorProperty<LdbItem>(
     _entities[1].properties[7],
+  );
+
+  /// See [LdbItem.isArchived].
+  static final isArchived = obx.QueryBooleanProperty<LdbItem>(
+    _entities[1].properties[8],
   );
 }
 

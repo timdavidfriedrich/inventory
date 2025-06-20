@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Item implements DiagnosticableTreeMixin {
   int? get id;
+  bool get isArchived;
   String get name;
   String? get notes;
   Uint8List? get image;
@@ -36,6 +37,7 @@ mixin _$Item implements DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('isArchived', isArchived))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('notes', notes))
       ..add(DiagnosticsProperty('image', image))
@@ -51,6 +53,8 @@ mixin _$Item implements DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is Item &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.isArchived, isArchived) ||
+                other.isArchived == isArchived) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.notes, notes) || other.notes == notes) &&
             const DeepCollectionEquality().equals(other.image, image) &&
@@ -67,6 +71,7 @@ mixin _$Item implements DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      isArchived,
       name,
       notes,
       const DeepCollectionEquality().hash(image),
@@ -77,7 +82,7 @@ mixin _$Item implements DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
   }
 }
 
@@ -88,6 +93,7 @@ abstract mixin class $ItemCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
+      bool isArchived,
       String name,
       String? notes,
       Uint8List? image,
@@ -112,6 +118,7 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? isArchived = null,
     Object? name = null,
     Object? notes = freezed,
     Object? image = freezed,
@@ -125,6 +132,10 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isArchived: null == isArchived
+          ? _self.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -176,6 +187,7 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
 class _Item with DiagnosticableTreeMixin implements Item {
   const _Item(
       {this.id,
+      this.isArchived = false,
       this.name = "",
       this.notes,
       this.image,
@@ -188,6 +200,9 @@ class _Item with DiagnosticableTreeMixin implements Item {
 
   @override
   final int? id;
+  @override
+  @JsonKey()
+  final bool isArchived;
   @override
   @JsonKey()
   final String name;
@@ -231,6 +246,7 @@ class _Item with DiagnosticableTreeMixin implements Item {
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('isArchived', isArchived))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('notes', notes))
       ..add(DiagnosticsProperty('image', image))
@@ -246,6 +262,8 @@ class _Item with DiagnosticableTreeMixin implements Item {
         (other.runtimeType == runtimeType &&
             other is _Item &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.isArchived, isArchived) ||
+                other.isArchived == isArchived) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.notes, notes) || other.notes == notes) &&
             const DeepCollectionEquality().equals(other.image, image) &&
@@ -262,6 +280,7 @@ class _Item with DiagnosticableTreeMixin implements Item {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      isArchived,
       name,
       notes,
       const DeepCollectionEquality().hash(image),
@@ -272,7 +291,7 @@ class _Item with DiagnosticableTreeMixin implements Item {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
   }
 }
 
@@ -284,6 +303,7 @@ abstract mixin class _$ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
+      bool isArchived,
       String name,
       String? notes,
       Uint8List? image,
@@ -309,6 +329,7 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = freezed,
+    Object? isArchived = null,
     Object? name = null,
     Object? notes = freezed,
     Object? image = freezed,
@@ -322,6 +343,10 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isArchived: null == isArchived
+          ? _self.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable

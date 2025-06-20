@@ -9,8 +9,3 @@ class OverviewRefreshItems extends OverviewEvent {
   final AppResult<List<Item>> result;
   const OverviewRefreshItems(this.result);
 }
-
-class OverviewDeleteItem extends OverviewEvent {
-  final Item item;
-  const OverviewDeleteItem(this.item);
-}

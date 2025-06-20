@@ -6,4 +6,6 @@ abstract interface class ItemRepository {
   Future<AppResult<Item?>> getItemById(int id);
   Future<AppResult<void>> saveItem(Item item);
   Future<AppResult<void>> deleteItem(Item item);
+  Future<AppResult<void>> archiveItem(Item item);
+  Future<AppResult<void>> unarchiveItem(Item item);
 }

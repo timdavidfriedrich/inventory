@@ -37,8 +37,8 @@ class DetailsSaveItem extends DetailsEvent {
   const DetailsSaveItem();
 }
 
-class DetailsDeleteItem extends DetailsEvent {
-  const DetailsDeleteItem();
+class DetailsArchiveItem extends DetailsEvent {
+  const DetailsArchiveItem();
 }
 
 class DetailsManageView extends DetailsEvent {

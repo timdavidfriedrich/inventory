@@ -18,11 +18,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get common_cancel => 'Cancel';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_archive => 'Archive';
 
   @override
-  String get common_delete_confirm =>
-      'Are you sure you want to delete this item?';
+  String get common_archive_confirm =>
+      'Are you sure you want to archive this item?';
 
   @override
   String get common_save => 'Save';
