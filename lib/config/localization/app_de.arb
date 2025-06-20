@@ -3,11 +3,22 @@
  "appTitle": "Home Inventory",
  "common_error": "Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.",
  "common_cancel": "Abbrechen",
+ "common_delete": "Löschen",
+ "common_delete_confirm": "Bist du sicher, dass du dieses Objekt löschen möchtest?",
+ "common_save": "Speichern",
+ "common_add": "Hinzufügen",
  "screen_overview": "Inventar",
  "screen_declutter": "Ausmisten",
  "screen_tasks": "Aufgaben",
  "screen_archive": "Archiv",
  "screen_settings": "Einstellungen",
  "screen_scan": "Scanne ein Objekt",
- "screen_details": "Objekt-Details"
+ "screen_details": "Objekt-Details",
+ "details_name": "Name",
+ "details_name_hint": "Objekt",
+ "details_notes": "Notizen",
+ "details_notes_hint": "Ergänze wichtige Informationen…",
+ "details_tags": "Kategorien",
+ "details_add_tag": "Kategorie hinzufügen",
+ "details_location": "Standort"
 }

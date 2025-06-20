@@ -104,17 +104,41 @@ abstract class AppLocalizations {
   /// **'Home Inventory'**
   String get appTitle;
 
-  /// No description provided for @error_general.
+  /// No description provided for @common_error.
   ///
   /// In en, this message translates to:
   /// **'An error occurred.\nPlease try again later.'**
-  String get error_general;
+  String get common_error;
 
-  /// No description provided for @cancel.
+  /// No description provided for @common_cancel.
   ///
   /// In en, this message translates to:
   /// **'Cancel'**
-  String get cancel;
+  String get common_cancel;
+
+  /// No description provided for @common_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get common_delete;
+
+  /// No description provided for @common_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this item?'**
+  String get common_delete_confirm;
+
+  /// No description provided for @common_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get common_save;
+
+  /// No description provided for @common_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get common_add;
 
   /// No description provided for @screen_overview.
   ///
@@ -157,6 +181,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Item details'**
   String get screen_details;
+
+  /// No description provided for @details_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get details_name;
+
+  /// No description provided for @details_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get details_name_hint;
+
+  /// No description provided for @details_notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get details_notes;
+
+  /// No description provided for @details_notes_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add some important information…'**
+  String get details_notes_hint;
+
+  /// No description provided for @details_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get details_tags;
+
+  /// No description provided for @details_add_tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag'**
+  String get details_add_tag;
+
+  /// No description provided for @details_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get details_location;
 }
 
 class _AppLocalizationsDelegate

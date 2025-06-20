@@ -12,10 +12,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
-  String get error_general => 'An error occurred.\nPlease try again later.';
+  String get common_error => 'An error occurred.\nPlease try again later.';
 
   @override
-  String get cancel => 'Cancel';
+  String get common_cancel => 'Cancel';
+
+  @override
+  String get common_delete => 'Delete';
+
+  @override
+  String get common_delete_confirm =>
+      'Are you sure you want to delete this item?';
+
+  @override
+  String get common_save => 'Save';
+
+  @override
+  String get common_add => 'Add';
 
   @override
   String get screen_overview => 'Inventory';
@@ -37,4 +50,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screen_details => 'Item details';
+
+  @override
+  String get details_name => 'Name';
+
+  @override
+  String get details_name_hint => 'Item';
+
+  @override
+  String get details_notes => 'Notes';
+
+  @override
+  String get details_notes_hint => 'Add some important information…';
+
+  @override
+  String get details_tags => 'Tags';
+
+  @override
+  String get details_add_tag => 'Add tag';
+
+  @override
+  String get details_location => 'Location';
 }

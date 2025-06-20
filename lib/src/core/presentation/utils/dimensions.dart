@@ -64,6 +64,9 @@ class Dimensions {
   /// 32.0
   static const double largeBorderRadius = 32.0;
 
+  /// 999.0
+  static const double fullBorderRadius = 999.0;
+
   /// 16.0
   static const double smallIconSize = 16.0;
 

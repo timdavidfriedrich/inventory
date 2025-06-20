@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/presentation/dimensions.dart';
+import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 
 class AppTheme {
   const AppTheme._();

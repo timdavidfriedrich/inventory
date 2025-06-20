@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/presentation/dimensions.dart';
+import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
 class VerticalErrorWidget extends StatelessWidget {
-  const VerticalErrorWidget({super.key});
+  final String? message;
+  const VerticalErrorWidget({
+    this.message,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class VerticalErrorWidget extends StatelessWidget {
         ),
         const SizedBox(height: Dimensions.mediumSpacing),
         Text(
-          context.s.common_error,
+          message ?? context.s.common_error,
           textAlign: TextAlign.center,
           style: context.t.bodyLarge,
         ),

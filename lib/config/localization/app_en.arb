@@ -3,11 +3,22 @@
  "appTitle": "Home Inventory",
  "common_error": "An error occurred.\nPlease try again later.",
  "common_cancel": "Cancel",
+ "common_delete": "Delete",
+ "common_delete_confirm": "Are you sure you want to delete this item?",
+ "common_save": "Save",
+ "common_add": "Add",
  "screen_overview": "Inventory",
  "screen_declutter": "Declutter",
  "screen_tasks": "Tasks",
  "screen_archive": "Archive",
  "screen_settings": "Settings",
  "screen_scan": "Capture a new item",
- "screen_details": "Item details"
+ "screen_details": "Item details",
+ "details_name": "Name",
+ "details_name_hint": "Item",
+ "details_notes": "Notes",
+ "details_notes_hint": "Add some important information…",
+ "details_tags": "Tags",
+ "details_add_tag": "Add tag",
+ "details_location": "Location"
 }

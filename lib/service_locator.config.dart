@@ -21,12 +21,18 @@ import 'package:inventory/src/core/data/repositories/item_repository_impl.dart'
     as _i680;
 import 'package:inventory/src/core/domain/repositories/item_repository.dart'
     as _i568;
+import 'package:inventory/src/core/domain/usecases/item/delete_item_use_case.dart'
+    as _i302;
 import 'package:inventory/src/core/domain/usecases/item/get_all_items_use_case.dart'
     as _i274;
+import 'package:inventory/src/core/domain/usecases/item/get_item_by_id_use_case.dart'
+    as _i989;
 import 'package:inventory/src/core/domain/usecases/item/save_item_use_case.dart'
     as _i413;
 import 'package:inventory/src/core/presentation/app_router.dart' as _i249;
 import 'package:inventory/src/core/presentation/home_cubit.dart' as _i753;
+import 'package:inventory/src/features/details/presentation/details_bloc.dart'
+    as _i778;
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
     as _i364;
 
@@ -45,8 +51,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i186.LocalDatabase.create(),
       preResolve: true,
     );
-    gh.factory<_i249.AppRouter>(() => _i249.AppRouter());
     gh.factory<_i753.HomeCubit>(() => _i753.HomeCubit());
+    gh.singleton<_i249.AppRouter>(() => _i249.AppRouter());
     gh.lazySingleton<_i653.LocalDatabaseDataSource>(() =>
         _i920.LocalDatabaseDataSourceImpl(
             localDatabase: gh<_i186.LocalDatabase>()));
@@ -54,11 +60,20 @@ extension GetItInjectableX on _i174.GetIt {
         localDataSource: gh<_i653.LocalDatabaseDataSource>()));
     gh.factory<_i274.GetAllItemsUseCase>(
         () => _i274.GetAllItemsUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i302.DeleteItemUseCase>(
+        () => _i302.DeleteItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i413.SaveItemUseCase>(
         () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i989.GetItemByIdUseCase>(
+        () => _i989.GetItemByIdUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i364.OverviewBloc>(() => _i364.OverviewBloc(
-          getAllItemsUseCase: gh<_i274.GetAllItemsUseCase>(),
-          saveItemUseCase: gh<_i413.SaveItemUseCase>(),
+          gh<_i274.GetAllItemsUseCase>(),
+          gh<_i302.DeleteItemUseCase>(),
+        ));
+    gh.factory<_i778.DetailsBloc>(() => _i778.DetailsBloc(
+          gh<_i989.GetItemByIdUseCase>(),
+          gh<_i413.SaveItemUseCase>(),
+          gh<_i302.DeleteItemUseCase>(),
         ));
     return this;
   }

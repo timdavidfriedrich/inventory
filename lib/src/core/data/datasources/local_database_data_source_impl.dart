@@ -23,6 +23,14 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   }
 
   @override
+  Future<LdbItem?> getItemById(int id) async {
+    if (id == 0) {
+      return null;
+    }
+    return _itemBox.get(id);
+  }
+
+  @override
   Future<int> upsertItem(LdbItem item) async {
     return _itemBox.put(item);
   }

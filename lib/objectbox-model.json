@@ -42,7 +42,7 @@
     },
     {
       "id": "2:1080030442287171865",
-      "lastPropertyId": "7:3502795990010228169",
+      "lastPropertyId": "9:3799800730157756838",
       "name": "LdbItem",
       "properties": [
         {
@@ -54,11 +54,6 @@
         {
           "id": "2:7088229138213660982",
           "name": "name",
-          "type": 9
-        },
-        {
-          "id": "3:1159076210894445184",
-          "name": "description",
           "type": 9
         },
         {
@@ -83,6 +78,16 @@
           "flags": 520,
           "indexId": "2:7592040704796605311",
           "relationTarget": "LdbLocation"
+        },
+        {
+          "id": "8:1151407445632383083",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "9:3799800730157756838",
+          "name": "suggestedTags",
+          "type": 30
         }
       ],
       "relations": []
@@ -201,7 +206,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    1159076210894445184
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

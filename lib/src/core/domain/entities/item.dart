@@ -7,11 +7,12 @@ part 'item.freezed.dart';
 @freezed
 abstract class Item with _$Item {
   const factory Item({
-    required int id,
-    required String name,
-    String? description,
+    int? id,
+    @Default("") String name,
+    String? notes,
     Uint8List? image,
     @Default([]) List<String> tags,
+    @Default([]) List<String> suggestedTags,
     ItemCondition? condition,
     Location? location,
   }) = _Item;

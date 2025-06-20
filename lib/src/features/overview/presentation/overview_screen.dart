@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
 import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
-import 'package:inventory/src/core/presentation/dimensions.dart';
+import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart';
@@ -42,11 +42,11 @@ class OverviewScreen extends StatelessWidget with TabScreen {
                     final item = items[index];
                     return ListTile(
                       title: Text(item.name),
-                      subtitle: item.description != null ? Text(item.description!) : null,
+                      subtitle: item.notes != null ? Text(item.notes!) : null,
                       leading: item.image != null
                           ? Image.memory(item.image!)
                           : const Icon(Icons.image_not_supported_outlined),
-                      onTap: () => DetailsRoute().push(context),
+                      onTap: () => DetailsRoute(id: item.id).push(context),
                     );
                   },
                 ),
@@ -118,7 +118,7 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
           cancelButton: CupertinoActionSheetAction(
             onPressed: () => Navigator.of(context).pop(),
             isDefaultAction: true,
-            child: Text(context.s.cancel),
+            child: Text(context.s.common_cancel),
           ),
         ),
       );

@@ -69,7 +69,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 1080030442287171865),
     name: 'LdbItem',
-    lastPropertyId: const obx_int.IdUid(7, 3502795990010228169),
+    lastPropertyId: const obx_int.IdUid(9, 3799800730157756838),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -81,12 +81,6 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 7088229138213660982),
         name: 'name',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1159076210894445184),
-        name: 'description',
         type: 9,
         flags: 0,
       ),
@@ -115,6 +109,18 @@ final _entities = <obx_int.ModelEntity>[
         flags: 520,
         indexId: const obx_int.IdUid(2, 7592040704796605311),
         relationTarget: 'LdbLocation',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 1151407445632383083),
+        name: 'notes',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 3799800730157756838),
+        name: 'suggestedTags',
+        type: 30,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -284,7 +290,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [1159076210894445184],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -362,23 +368,27 @@ obx_int.ModelDefinition getObjectBoxModel() {
       },
       objectToFB: (LdbItem object, fb.Builder fbb) {
         final nameOffset = fbb.writeString(object.name);
-        final descriptionOffset = object.description == null
-            ? null
-            : fbb.writeString(object.description!);
         final imageBytesOffset = object.imageBytes == null
             ? null
             : fbb.writeListInt64(object.imageBytes!);
         final tagsOffset = fbb.writeList(
           object.tags.map(fbb.writeString).toList(growable: false),
         );
-        fbb.startTable(8);
+        final notesOffset = object.notes == null
+            ? null
+            : fbb.writeString(object.notes!);
+        final suggestedTagsOffset = fbb.writeList(
+          object.suggestedTags.map(fbb.writeString).toList(growable: false),
+        );
+        fbb.startTable(10);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
-        fbb.addOffset(2, descriptionOffset);
         fbb.addOffset(3, imageBytesOffset);
         fbb.addOffset(4, tagsOffset);
         fbb.addInt32(5, object.condition);
         fbb.addInt64(6, object.location.targetId);
+        fbb.addOffset(7, notesOffset);
+        fbb.addOffset(8, suggestedTagsOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -394,9 +404,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
-        final descriptionParam = const fb.StringReader(
+        final notesParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 8);
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final imageBytesParam = const fb.ListReader<int>(
           fb.Int64Reader(),
           lazy: false,
@@ -405,6 +415,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fb.StringReader(asciiOptimization: true),
           lazy: false,
         ).vTableGet(buffer, rootOffset, 12, []);
+        final suggestedTagsParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGet(buffer, rootOffset, 20, []);
         final conditionParam = const fb.Int32Reader().vTableGetNullable(
           buffer,
           rootOffset,
@@ -413,9 +427,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final object = LdbItem(
           id: idParam,
           name: nameParam,
-          description: descriptionParam,
+          notes: notesParam,
           imageBytes: imageBytesParam,
           tags: tagsParam,
+          suggestedTags: suggestedTagsParam,
           condition: conditionParam,
         );
         object.location.targetId = const fb.Int64Reader().vTableGet(
@@ -649,29 +664,34 @@ class LdbItem_ {
     _entities[1].properties[1],
   );
 
-  /// See [LdbItem.description].
-  static final description = obx.QueryStringProperty<LdbItem>(
-    _entities[1].properties[2],
-  );
-
   /// See [LdbItem.imageBytes].
   static final imageBytes = obx.QueryIntegerVectorProperty<LdbItem>(
-    _entities[1].properties[3],
+    _entities[1].properties[2],
   );
 
   /// See [LdbItem.tags].
   static final tags = obx.QueryStringVectorProperty<LdbItem>(
-    _entities[1].properties[4],
+    _entities[1].properties[3],
   );
 
   /// See [LdbItem.condition].
   static final condition = obx.QueryIntegerProperty<LdbItem>(
-    _entities[1].properties[5],
+    _entities[1].properties[4],
   );
 
   /// See [LdbItem.location].
   static final location = obx.QueryRelationToOne<LdbItem, LdbLocation>(
+    _entities[1].properties[5],
+  );
+
+  /// See [LdbItem.notes].
+  static final notes = obx.QueryStringProperty<LdbItem>(
     _entities[1].properties[6],
+  );
+
+  /// See [LdbItem.suggestedTags].
+  static final suggestedTags = obx.QueryStringVectorProperty<LdbItem>(
+    _entities[1].properties[7],
   );
 }
 

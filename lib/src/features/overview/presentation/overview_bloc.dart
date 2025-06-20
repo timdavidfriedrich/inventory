@@ -15,10 +15,6 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
     this._getAllItemsUseCase,
     this._deleteItemUseCase,
   ) : super(OverviewLoading()) {
-    _getAllItemsUseCase().forEach((result) {
-      add(OverviewRefreshItems(result));
-    });
-
     on<OverviewRefreshItems>((event, emit) async {
       emit(OverviewLoading());
       if (event.result is Success) {
@@ -31,6 +27,14 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
     on<OverviewDeleteItem>((event, emit) async {
       emit(OverviewLoading());
       await _deleteItemUseCase(event.item);
+    });
+
+    _init();
+  }
+
+  void _init() {
+    _getAllItemsUseCase().forEach((result) {
+      add(OverviewRefreshItems(result));
     });
   }
 }

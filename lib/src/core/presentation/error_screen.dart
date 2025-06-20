@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/presentation/dimensions.dart';
+import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
 
@@ -9,8 +9,13 @@ const _cancelButtonDelay = Duration(seconds: 3);
 const _animationDuration = Duration(seconds: 1);
 
 class ErrorScreen extends StatefulWidget {
+  final String? message;
   final VoidCallback? onCancel;
-  const ErrorScreen({this.onCancel, super.key});
+  const ErrorScreen({
+    this.message,
+    this.onCancel,
+    super.key,
+  });
 
   @override
   State<ErrorScreen> createState() => _ErrorScreenState();
@@ -41,7 +46,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
           children: [
             const SizedBox(height: Dimensions.extraExtraLargeSpacing),
             const Spacer(),
-            const VerticalErrorWidget(),
+            VerticalErrorWidget(message: widget.message),
             const Spacer(),
             AnimatedOpacity(
               opacity: showCancelButton ? 1 : 0,

@@ -27,6 +27,20 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
+  Future<AppResult<Item>> getItemById(int id) async {
+    try {
+      final ldbItem = await _localDataSource.getItemById(id);
+      if (ldbItem == null) {
+        return AppResult.error(Exception("Item not found with id: $id"));
+      }
+      final item = ldbItem.toItem();
+      return AppResult.success(item);
+    } catch (e) {
+      return AppResult.error(Exception(e));
+    }
+  }
+
+  @override
   Future<AppResult<void>> saveItem(Item item) async {
     try {
       final ldbItem = item.toLdbItem();

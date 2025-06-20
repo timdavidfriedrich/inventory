@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:inventory/src/core/presentation/dimensions.dart';
+import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
 const _cancelButtonDelay = Duration(seconds: 3);
