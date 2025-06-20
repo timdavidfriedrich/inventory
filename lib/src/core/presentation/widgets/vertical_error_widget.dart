@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory/src/core/presentation/utils/app_icons.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
@@ -18,7 +19,7 @@ class VerticalErrorWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(
-          context.isIos ? CupertinoIcons.exclamationmark_triangle : Icons.warning_amber_rounded,
+          AppIcons.error(context),
           size: Dimensions.extraLargeIconSize,
           color: context.c.primary,
         ),

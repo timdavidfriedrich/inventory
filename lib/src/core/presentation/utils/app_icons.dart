@@ -13,6 +13,10 @@ class AppIcons {
     return context.isIos ? CupertinoIcons.archivebox : Icons.archive_outlined;
   }
 
+  static IconData error(BuildContext context) {
+    return context.isIos ? CupertinoIcons.exclamationmark_triangle : Icons.warning_amber_rounded;
+  }
+
   static IconData settings(BuildContext context) {
     return context.isIos ? CupertinoIcons.settings : Icons.settings_outlined;
   }
