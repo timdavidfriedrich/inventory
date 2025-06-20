@@ -20,7 +20,7 @@ class VerticalErrorWidget extends StatelessWidget {
         ),
         const SizedBox(height: Dimensions.mediumSpacing),
         Text(
-          context.s.error_general,
+          context.s.common_error,
           textAlign: TextAlign.center,
           style: context.t.bodyLarge,
         ),

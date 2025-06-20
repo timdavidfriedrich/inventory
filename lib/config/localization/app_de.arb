@@ -1,8 +1,8 @@
 {
  "@@locale": "de",
  "appTitle": "Home Inventory",
- "error_general": "Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.",
- "cancel": "Abbrechen",
+ "common_error": "Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.",
+ "common_cancel": "Abbrechen",
  "screen_overview": "Inventar",
  "screen_declutter": "Ausmisten",
  "screen_tasks": "Aufgaben",
