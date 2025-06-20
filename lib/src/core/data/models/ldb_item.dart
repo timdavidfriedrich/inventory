@@ -5,11 +5,12 @@ import 'package:objectbox/objectbox.dart';
 class LdbItem {
   @Id()
   int id = 0;
-
+  bool isArchived;
   String name;
-  String? description;
+  String? notes;
   List<int>? imageBytes;
   List<String> tags;
+  List<String> suggestedTags;
 
   /// Storing enum as an int (its index).
   @Property(type: PropertyType.int)
@@ -19,10 +20,12 @@ class LdbItem {
 
   LdbItem({
     this.id = 0,
+    this.isArchived = false,
     required this.name,
-    this.description,
+    this.notes,
     this.imageBytes,
-    required this.tags,
+    this.tags = const [],
+    this.suggestedTags = const [],
     this.condition,
   });
 }

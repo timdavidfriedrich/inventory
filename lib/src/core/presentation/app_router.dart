@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:inventory/src/core/domain/entities/scan_result.dart';
 import 'package:inventory/src/core/presentation/home_shell.dart';
 import 'package:inventory/src/features/archive/presentation/archive_screen.dart';
 import 'package:inventory/src/features/details/presentation/details_screen.dart';
@@ -9,7 +10,7 @@ import 'package:inventory/src/features/settings/presentation/settings_screen.dar
 
 part 'app_router.g.dart';
 
-@injectable
+@singleton
 class AppRouter {
   final GoRouter router;
 
@@ -54,11 +55,23 @@ class ArchiveRoute extends GoRouteData with _$ArchiveRoute {
 
 @TypedGoRoute<DetailsRoute>(path: DetailsScreen.routeName)
 class DetailsRoute extends GoRouteData with _$DetailsRoute {
-  const DetailsRoute();
+  final int? id;
+  const DetailsRoute({this.id});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const DetailsScreen();
+    return DetailsScreen(id: id);
+  }
+}
+
+@TypedGoRoute<DetailsFromScanRoute>(path: DetailsScreen.routeNameFromScan)
+class DetailsFromScanRoute extends GoRouteData with _$DetailsFromScanRoute {
+  final ScanResultWithImage? $extra;
+  const DetailsFromScanRoute(this.$extra);
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return DetailsScreen(scanResult: $extra);
   }
 }
 

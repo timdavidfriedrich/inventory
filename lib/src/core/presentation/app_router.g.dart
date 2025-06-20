@@ -10,6 +10,7 @@ List<RouteBase> get $appRoutes => [
       $homeRoute,
       $archiveRoute,
       $detailsRoute,
+      $detailsFromScanRoute,
       $scanRoute,
       $settingsRoute,
     ];
@@ -74,11 +75,18 @@ RouteBase get $detailsRoute => GoRouteData.$route(
     );
 
 mixin _$DetailsRoute on GoRouteData {
-  static DetailsRoute _fromState(GoRouterState state) => const DetailsRoute();
+  static DetailsRoute _fromState(GoRouterState state) => DetailsRoute(
+        id: _$convertMapValue('id', state.uri.queryParameters, int.tryParse),
+      );
+
+  DetailsRoute get _self => this as DetailsRoute;
 
   @override
   String get location => GoRouteData.$location(
         '/details',
+        queryParams: {
+          if (_self.id != null) 'id': _self.id!.toString(),
+        },
       );
 
   @override
@@ -93,6 +101,49 @@ mixin _$DetailsRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
+}
+
+RouteBase get $detailsFromScanRoute => GoRouteData.$route(
+      path: '/detailsFromScan',
+      factory: _$DetailsFromScanRoute._fromState,
+    );
+
+mixin _$DetailsFromScanRoute on GoRouteData {
+  static DetailsFromScanRoute _fromState(GoRouterState state) =>
+      DetailsFromScanRoute(
+        state.extra as ScanResultWithImage?,
+      );
+
+  DetailsFromScanRoute get _self => this as DetailsFromScanRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/detailsFromScan',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $scanRoute => GoRouteData.$route(

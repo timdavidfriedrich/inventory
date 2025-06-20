@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory/src/core/domain/entities/scan_result.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 
@@ -14,7 +17,12 @@ class ScanScreen extends StatelessWidget {
       appBar: context.isIos ? CupertinoNavigationBar() : AppBar(),
       body: Center(
         child: FilledButton(
-          onPressed: () => DetailsRoute().push(context),
+          onPressed: () => DetailsFromScanRoute(
+            ScanResult(
+              suggestedTags: ["Example", "Suggestion"],
+              name: "Test name",
+            ).attachImage(Uint8List(0)),
+          ).push(context),
           child: Text(context.s.screen_scan),
         ),
       ),

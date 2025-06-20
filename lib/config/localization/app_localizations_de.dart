@@ -12,7 +12,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
-  String get cancel => 'Abbrechen';
+  String get common_error =>
+      'Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.';
+
+  @override
+  String get common_cancel => 'Abbrechen';
+
+  @override
+  String get common_archive => 'Archivieren';
+
+  @override
+  String get common_archive_confirm =>
+      'Bist du sicher, dass du dieses Objekt archivieren möchtest?';
+
+  @override
+  String get common_save => 'Speichern';
+
+  @override
+  String get common_add => 'Hinzufügen';
 
   @override
   String get screen_overview => 'Inventar';
@@ -34,4 +51,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get screen_details => 'Objekt-Details';
+
+  @override
+  String get details_name => 'Name';
+
+  @override
+  String get details_name_hint => 'Objekt';
+
+  @override
+  String get details_notes => 'Notizen';
+
+  @override
+  String get details_notes_hint => 'Ergänze wichtige Informationen…';
+
+  @override
+  String get details_tags => 'Kategorien';
+
+  @override
+  String get details_add_tag => 'Kategorie hinzufügen';
+
+  @override
+  String get details_location => 'Standort';
 }

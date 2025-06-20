@@ -43,6 +43,7 @@ dependencies:
 
   # State management
   flutter_bloc: ^9.1.1
+  flutter_hooks: ^0.21.2
 
   # Streams
   rxdart: ^0.28.0
@@ -78,3 +79,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  fonts:
+    - family: Khuja
+      fonts:
+        - asset: assets/fonts/Khuja-Regular.otf
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf

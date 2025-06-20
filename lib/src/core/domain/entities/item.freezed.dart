@@ -15,11 +15,13 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$Item implements DiagnosticableTreeMixin {
-  int get id;
+  int? get id;
+  bool get isArchived;
   String get name;
-  String? get description;
+  String? get notes;
   Uint8List? get image;
   List<String> get tags;
+  List<String> get suggestedTags;
   ItemCondition? get condition;
   Location? get location;
 
@@ -35,10 +37,12 @@ mixin _$Item implements DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('isArchived', isArchived))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('notes', notes))
       ..add(DiagnosticsProperty('image', image))
       ..add(DiagnosticsProperty('tags', tags))
+      ..add(DiagnosticsProperty('suggestedTags', suggestedTags))
       ..add(DiagnosticsProperty('condition', condition))
       ..add(DiagnosticsProperty('location', location));
   }
@@ -49,11 +53,14 @@ mixin _$Item implements DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is Item &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.isArchived, isArchived) ||
+                other.isArchived == isArchived) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
             const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other.tags, tags) &&
+            const DeepCollectionEquality()
+                .equals(other.suggestedTags, suggestedTags) &&
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
             (identical(other.location, location) ||
@@ -64,16 +71,18 @@ mixin _$Item implements DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      isArchived,
       name,
-      description,
+      notes,
       const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(tags),
+      const DeepCollectionEquality().hash(suggestedTags),
       condition,
       location);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, name: $name, description: $description, image: $image, tags: $tags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
   }
 }
 
@@ -83,11 +92,13 @@ abstract mixin class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
+      bool isArchived,
       String name,
-      String? description,
+      String? notes,
       Uint8List? image,
       List<String> tags,
+      List<String> suggestedTags,
       ItemCondition? condition,
       Location? location});
 
@@ -106,26 +117,32 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
+    Object? isArchived = null,
     Object? name = null,
-    Object? description = freezed,
+    Object? notes = freezed,
     Object? image = freezed,
     Object? tags = null,
+    Object? suggestedTags = null,
     Object? condition = freezed,
     Object? location = freezed,
   }) {
     return _then(_self.copyWith(
-      id: null == id
+      id: freezed == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      isArchived: null == isArchived
+          ? _self.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
+      notes: freezed == notes
+          ? _self.notes
+          : notes // ignore: cast_nullable_to_non_nullable
               as String?,
       image: freezed == image
           ? _self.image
@@ -134,6 +151,10 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
       tags: null == tags
           ? _self.tags
           : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      suggestedTags: null == suggestedTags
+          ? _self.suggestedTags
+          : suggestedTags // ignore: cast_nullable_to_non_nullable
               as List<String>,
       condition: freezed == condition
           ? _self.condition
@@ -165,21 +186,28 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
 
 class _Item with DiagnosticableTreeMixin implements Item {
   const _Item(
-      {required this.id,
-      required this.name,
-      this.description,
+      {this.id,
+      this.isArchived = false,
+      this.name = "",
+      this.notes,
       this.image,
       final List<String> tags = const [],
+      final List<String> suggestedTags = const [],
       this.condition,
       this.location})
-      : _tags = tags;
+      : _tags = tags,
+        _suggestedTags = suggestedTags;
 
   @override
-  final int id;
+  final int? id;
   @override
+  @JsonKey()
+  final bool isArchived;
+  @override
+  @JsonKey()
   final String name;
   @override
-  final String? description;
+  final String? notes;
   @override
   final Uint8List? image;
   final List<String> _tags;
@@ -189,6 +217,15 @@ class _Item with DiagnosticableTreeMixin implements Item {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tags);
+  }
+
+  final List<String> _suggestedTags;
+  @override
+  @JsonKey()
+  List<String> get suggestedTags {
+    if (_suggestedTags is EqualUnmodifiableListView) return _suggestedTags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_suggestedTags);
   }
 
   @override
@@ -209,10 +246,12 @@ class _Item with DiagnosticableTreeMixin implements Item {
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('isArchived', isArchived))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('notes', notes))
       ..add(DiagnosticsProperty('image', image))
       ..add(DiagnosticsProperty('tags', tags))
+      ..add(DiagnosticsProperty('suggestedTags', suggestedTags))
       ..add(DiagnosticsProperty('condition', condition))
       ..add(DiagnosticsProperty('location', location));
   }
@@ -223,11 +262,14 @@ class _Item with DiagnosticableTreeMixin implements Item {
         (other.runtimeType == runtimeType &&
             other is _Item &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.isArchived, isArchived) ||
+                other.isArchived == isArchived) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
             const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._suggestedTags, _suggestedTags) &&
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
             (identical(other.location, location) ||
@@ -238,16 +280,18 @@ class _Item with DiagnosticableTreeMixin implements Item {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      isArchived,
       name,
-      description,
+      notes,
       const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_suggestedTags),
       condition,
       location);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, name: $name, description: $description, image: $image, tags: $tags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
   }
 }
 
@@ -258,11 +302,13 @@ abstract mixin class _$ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
+      bool isArchived,
       String name,
-      String? description,
+      String? notes,
       Uint8List? image,
       List<String> tags,
+      List<String> suggestedTags,
       ItemCondition? condition,
       Location? location});
 
@@ -282,26 +328,32 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
+    Object? isArchived = null,
     Object? name = null,
-    Object? description = freezed,
+    Object? notes = freezed,
     Object? image = freezed,
     Object? tags = null,
+    Object? suggestedTags = null,
     Object? condition = freezed,
     Object? location = freezed,
   }) {
     return _then(_Item(
-      id: null == id
+      id: freezed == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      isArchived: null == isArchived
+          ? _self.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
+      notes: freezed == notes
+          ? _self.notes
+          : notes // ignore: cast_nullable_to_non_nullable
               as String?,
       image: freezed == image
           ? _self.image
@@ -310,6 +362,10 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
       tags: null == tags
           ? _self._tags
           : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      suggestedTags: null == suggestedTags
+          ? _self._suggestedTags
+          : suggestedTags // ignore: cast_nullable_to_non_nullable
               as List<String>,
       condition: freezed == condition
           ? _self.condition
