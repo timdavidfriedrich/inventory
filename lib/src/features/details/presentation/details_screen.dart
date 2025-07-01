@@ -90,20 +90,58 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<DetailsBloc>().state;
+    if (state is! DetailsSuccess) {
+      return const SizedBox.shrink();
+    }
+    final imageData = state.item.image;
     return Center(
       child: Container(
+        clipBehavior: Clip.hardEdge,
         width: _imageSize,
         height: _imageSize,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
           border: Border.all(
             color: context.c.outlineVariant,
-            width: Dimensions.mediumBorderWidth,
+            width: Dimensions.semiLargeBorderWidth,
           ),
+          color: Theme.of(context).colorScheme.surface,
+          image: imageData == null
+              ? null
+              : DecorationImage(
+                  fit: BoxFit.cover,
+                  image: MemoryImage(imageData),
+                ),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
-          child: Placeholder(),
+        child: _OpenCameraButton(),
+      ),
+    );
+  }
+}
+
+class _OpenCameraButton extends StatelessWidget {
+  const _OpenCameraButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      // * Subtracting 2 is a hotfix to avoid the border being too wide
+      borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius - 2),
+      clipBehavior: Clip.hardEdge,
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () async {
+          // ! TODO: Navigate to CameraScreen, await image and update the item
+          await CameraRoute().push(context).then((imageData) async {
+            if (context.mounted) {
+              context.read<DetailsBloc>().add(DetailsUpdateImage(imageData));
+            }
+          });
+        },
+        child: Icon(
+          AppIcons.camera(context),
+          size: Dimensions.largeIconSize,
         ),
       ),
     );

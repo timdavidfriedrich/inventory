@@ -20,6 +20,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     this._archiveItemUseCase,
   ) : super(DetailsLoading()) {
     on<DetailsInit>(_init);
+    on<DetailsUpdateImage>(_updateImage);
     on<DetailsUpdateName>(_updateName);
     on<DetailsUpdateNotes>(_updateNotes);
     on<DetailsAddTag>(_addTag);
@@ -62,6 +63,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         emit(DetailsError(message: result.toString()));
       }
     });
+  }
+
+  void _updateImage(DetailsUpdateImage event, Emitter<DetailsState> emit) {
+    if (state is! DetailsSuccess) return;
+    final currentState = state as DetailsSuccess;
+    final updatedItem = currentState.item.copyWith(image: event.imageData);
+    emit(currentState.copyWith(item: updatedItem));
   }
 
   void _updateName(DetailsUpdateName event, Emitter<DetailsState> emit) {

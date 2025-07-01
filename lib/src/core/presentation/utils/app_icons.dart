@@ -49,6 +49,14 @@ class AppIcons {
     return context.isIos ? CupertinoIcons.arrow_uturn_left : Icons.undo_outlined;
   }
 
+  static IconData retry(BuildContext context) {
+    return context.isIos ? CupertinoIcons.arrow_counterclockwise : Icons.replay;
+  }
+
+  static IconData done(BuildContext context) {
+    return context.isIos ? CupertinoIcons.check_mark : Icons.check;
+  }
+
   static IconData overview(BuildContext context) {
     return context.isIos ? CupertinoIcons.rectangle_grid_2x2 : Icons.dashboard_outlined;
   }

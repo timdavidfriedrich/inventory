@@ -40,11 +40,22 @@ class OverviewScreen extends StatelessWidget with TabScreen {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return ListTile(
-                      onTap: () => DetailsRoute(id: item.id).push(context),
-                      leading: const Icon(Icons.image_not_supported_outlined),
-                      title: Text(item.name),
-                      subtitle: item.notes != null ? Text(item.notes!) : null,
+                    return Padding(
+                      padding: const EdgeInsets.all(Dimensions.smallSpacing),
+                      child: ListTile(
+                        onTap: () => DetailsRoute(id: item.id).push(context),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
+                          child: item.image != null
+                              ? Image.memory(item.image!)
+                              : AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Container(color: context.c.surfaceContainerHighest),
+                                ),
+                        ),
+                        title: Text(item.name),
+                        subtitle: item.notes != null ? Text(item.notes!) : null,
+                      ),
                     );
                   },
                 ),
@@ -55,7 +66,9 @@ class OverviewScreen extends StatelessWidget with TabScreen {
       floatingActionButton: context.isIos
           ? null
           : FloatingActionButton(
-              onPressed: () => ScanRoute().push(context),
+              // TODO: Don't call CameraRoute but new ScanController that calls camera, 
+              // awaits picture and then scans it
+              onPressed: () => CameraRoute().push(context),
               child: const Icon(Icons.add),
             ),
     );

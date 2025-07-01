@@ -31,6 +31,8 @@ import 'package:inventory/src/core/domain/usecases/item/save_item_use_case.dart'
     as _i413;
 import 'package:inventory/src/core/presentation/app_router.dart' as _i249;
 import 'package:inventory/src/core/presentation/home_cubit.dart' as _i753;
+import 'package:inventory/src/features/camera/presentation/camera_bloc.dart'
+    as _i150;
 import 'package:inventory/src/features/details/presentation/details_bloc.dart'
     as _i778;
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
@@ -52,6 +54,7 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i753.HomeCubit>(() => _i753.HomeCubit());
+    gh.factory<_i150.CameraBloc>(() => _i150.CameraBloc());
     gh.singleton<_i249.AppRouter>(() => _i249.AppRouter());
     gh.lazySingleton<_i653.LocalDatabaseDataSource>(() =>
         _i920.LocalDatabaseDataSourceImpl(
@@ -60,12 +63,12 @@ extension GetItInjectableX on _i174.GetIt {
         localDataSource: gh<_i653.LocalDatabaseDataSource>()));
     gh.factory<_i274.GetAllItemsUseCase>(
         () => _i274.GetAllItemsUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i12.ArchiveItemUseCase>(
+        () => _i12.ArchiveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i413.SaveItemUseCase>(
         () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i989.GetItemByIdUseCase>(
         () => _i989.GetItemByIdUseCase(repository: gh<_i568.ItemRepository>()));
-    gh.factory<_i12.ArchiveItemUseCase>(
-        () => _i12.ArchiveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i778.DetailsBloc>(() => _i778.DetailsBloc(
           gh<_i989.GetItemByIdUseCase>(),
           gh<_i413.SaveItemUseCase>(),

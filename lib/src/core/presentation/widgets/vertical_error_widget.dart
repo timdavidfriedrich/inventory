@@ -13,23 +13,25 @@ class VerticalErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          AppIcons.error(context),
-          size: Dimensions.extraLargeIconSize,
-          color: context.c.primary,
-        ),
-        const SizedBox(height: Dimensions.mediumSpacing),
-        Text(
-          message ?? context.s.common_error,
-          textAlign: TextAlign.center,
-          style: context.t.bodyLarge,
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            AppIcons.error(context),
+            size: Dimensions.extraLargeIconSize,
+            color: context.c.primary,
+          ),
+          const SizedBox(height: Dimensions.mediumSpacing),
+          Text(
+            message ?? context.s.common_error,
+            textAlign: TextAlign.center,
+            style: context.t.bodyLarge,
+          ),
+        ],
+      ),
     );
   }
 }

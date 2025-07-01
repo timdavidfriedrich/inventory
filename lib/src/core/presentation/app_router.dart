@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:inventory/src/core/domain/entities/scan_result.dart';
 import 'package:inventory/src/core/presentation/home_shell.dart';
 import 'package:inventory/src/features/archive/presentation/archive_screen.dart';
+import 'package:inventory/src/features/camera/presentation/camera_screen.dart';
 import 'package:inventory/src/features/details/presentation/details_screen.dart';
 import 'package:inventory/src/features/scan/presentation/scan_screen.dart';
 import 'package:inventory/src/features/settings/presentation/settings_screen.dart';
@@ -72,6 +73,16 @@ class DetailsFromScanRoute extends GoRouteData with _$DetailsFromScanRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return DetailsScreen(scanResult: $extra);
+  }
+}
+
+@TypedGoRoute<CameraRoute>(path: CameraScreen.routeName)
+class CameraRoute extends GoRouteData with _$CameraRoute {
+  const CameraRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CameraScreen();
   }
 }
 
