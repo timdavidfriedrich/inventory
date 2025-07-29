@@ -126,13 +126,13 @@ class _OpenCameraButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      // * Subtracting 2 is a hotfix to avoid the border being too wide
-      borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius - 2),
+      borderRadius: BorderRadius.circular(
+        Dimensions.smallBorderRadius - Dimensions.mediumBorderWidth,
+      ),
       clipBehavior: Clip.hardEdge,
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          // ! TODO: Navigate to CameraScreen, await image and update the item
           await CameraRoute().push(context).then((imageData) async {
             if (context.mounted) {
               context.read<DetailsBloc>().add(DetailsUpdateImage(imageData));
@@ -316,15 +316,26 @@ class _FloatingActionButtons extends StatelessWidget {
               onPressed: () {
                 ArchiveItemConfirmDialog.show(context).then((confirmed) {
                   if (confirmed == true && context.mounted) {
+                    context.read<DetailsBloc>().add(DetailsDeleteItem());
+                  }
+                });
+              },
+              child: Icon(AppIcons.delete(context), color: context.c.error),
+            ),
+            const FloatingToolbarDivider(),
+            FloatingToolbarButton(
+              onPressed: () {
+                ArchiveItemConfirmDialog.show(context).then((confirmed) {
+                  if (confirmed == true && context.mounted) {
                     context.read<DetailsBloc>().add(DetailsArchiveItem());
                   }
                 });
               },
-              child: Icon(AppIcons.archive(context), color: context.c.error),
+              child: Icon(AppIcons.archive(context)),
             ),
             const FloatingToolbarDivider(),
             FloatingToolbarButton(
-              onPressed: () => context.read<DetailsBloc>().add(DetailsManageView()),
+              onPressed: () => context.read<DetailsBloc>().add(DetailsDeclutterItem()),
               child: Icon(AppIcons.declutter(context)),
             ),
           ],

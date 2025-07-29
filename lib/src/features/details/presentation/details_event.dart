@@ -48,6 +48,14 @@ class DetailsArchiveItem extends DetailsEvent {
   const DetailsArchiveItem();
 }
 
+class DetailsDeleteItem extends DetailsEvent {
+  const DetailsDeleteItem();
+}
+
+class DetailsDeclutterItem extends DetailsEvent {
+  const DetailsDeclutterItem();
+}
+
 class DetailsManageView extends DetailsEvent {
   const DetailsManageView();
 }
