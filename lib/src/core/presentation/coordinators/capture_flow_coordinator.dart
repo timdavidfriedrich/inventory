@@ -33,19 +33,19 @@ class CaptureFlowCoordinator {
       }
     } on CameraException catch (e) {
       Log.error("Camera error: ${e.description}");
-      _showErrorSnackBar(context, 'Camera error occurred');
+      if (context.mounted) _showErrorSnackBar(context, 'Camera error occurred');
     } on PlatformException catch (e) {
       Log.error("Platform error: ${e.message}");
-      _showErrorSnackBar(context, 'Device error occurred');
+      if (context.mounted) _showErrorSnackBar(context, 'Device error occurred');
     } on GoException catch (e) {
       Log.error("Navigation error: ${e.message}");
-      _showErrorSnackBar(context, 'Navigation error occurred');
+      if (context.mounted) _showErrorSnackBar(context, 'Navigation error occurred');
     } on TimeoutException catch (e) {
       Log.error("Timeout error: ${e.message}");
-      _showErrorSnackBar(context, 'Operation timed out');
+      if (context.mounted) _showErrorSnackBar(context, 'Operation timed out');
     } on FormatException catch (e) {
       Log.error("Format error: ${e.message}");
-      _showErrorSnackBar(context, 'Image format error');
+      if (context.mounted) _showErrorSnackBar(context, 'Image format error');
     }
   }
 

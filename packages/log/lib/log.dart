@@ -9,20 +9,20 @@ class Log {
   static const String _whiteCode = "\x1B[37m";
   static const String _defaultCode = "\x1B[0m";
 
-  static String _process(text) {
+  static String _process(dynamic text) {
     String processedtext = text.toString().replaceAll("\n", "\n$_whiteCode");
     return "$_whiteCode$processedtext$_defaultCode";
   }
 
-  static void debug(text) {
+  static void debug(dynamic text) {
     if (kDebugMode) log("$_debugCode DEBUG: ${_process(text)}");
   }
 
-  static void hint(text) {
+  static void hint(dynamic text) {
     if (kDebugMode) log("$_hintCode HINT: ${_process(text)}");
   }
 
-  static void warning(text) {
+  static void warning(dynamic text) {
     if (kDebugMode) log("$_warningCode WARN: ${_process(text)}");
   }
 
