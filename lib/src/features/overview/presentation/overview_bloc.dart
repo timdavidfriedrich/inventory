@@ -16,7 +16,7 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
     on<OverviewRefreshItems>((event, emit) async {
       emit(OverviewLoading());
       if (event.result is Success) {
-        emit(OverviewSuccess((event.result as Success<List<Item>>).data));
+        emit(OverviewSuccess((event.result as Success<List<Item>>).value));
       } else if (event.result is Error) {
         emit(OverviewError((event.result as Error).error.toString()));
       }

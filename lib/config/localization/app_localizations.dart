@@ -235,6 +235,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tasks'**
   String get screen_tasks;
+
+  /// No description provided for @scan_failed_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to analyze image. AI suggestions are unavailable.'**
+  String get scan_failed_message;
 }
 
 class _AppLocalizationsDelegate

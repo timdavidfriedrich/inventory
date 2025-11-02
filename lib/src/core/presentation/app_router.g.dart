@@ -180,7 +180,11 @@ RouteBase get $scanRoute => GoRouteData.$route(
     );
 
 mixin _$ScanRoute on GoRouteData {
-  static ScanRoute _fromState(GoRouterState state) => const ScanRoute();
+  static ScanRoute _fromState(GoRouterState state) => ScanRoute(
+        state.extra as Uint8List,
+      );
+
+  ScanRoute get _self => this as ScanRoute;
 
   @override
   String get location => GoRouteData.$location(
@@ -188,17 +192,19 @@ mixin _$ScanRoute on GoRouteData {
       );
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $settingsRoute => GoRouteData.$route(

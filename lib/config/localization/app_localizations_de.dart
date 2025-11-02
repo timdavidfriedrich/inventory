@@ -78,4 +78,8 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get screen_tasks => 'Aufgaben';
+
+  @override
+  String get scan_failed_message =>
+      'Beim Analysieren des Fotos ist ein Fehler aufgetreten. KI-Vorschläge sind nicht verfügbar.';
 }

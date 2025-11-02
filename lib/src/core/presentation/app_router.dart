@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -8,6 +10,7 @@ import 'package:inventory/src/features/camera/presentation/camera_screen.dart';
 import 'package:inventory/src/features/details/presentation/details_screen.dart';
 import 'package:inventory/src/features/scan/presentation/scan_screen.dart';
 import 'package:inventory/src/features/settings/presentation/settings_screen.dart';
+import 'package:log/log.dart';
 
 part 'app_router.g.dart';
 
@@ -28,8 +31,7 @@ class AppRouter {
       final names = router.routerDelegate.currentConfiguration.matches.map((m) {
         return m.matchedLocation;
       }).toList();
-      // TODO: Replace debugPrint with log package
-      debugPrint('🏷️ GoRouter Stack via listener: $names');
+      Log.debug("🏷️ GoRouter Stack via listener: $names");
     });
   }
 }
@@ -88,11 +90,12 @@ class CameraRoute extends GoRouteData with _$CameraRoute {
 
 @TypedGoRoute<ScanRoute>(path: ScanScreen.routeName)
 class ScanRoute extends GoRouteData with _$ScanRoute {
-  const ScanRoute();
+  final Uint8List $extra;
+  const ScanRoute(this.$extra);
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const ScanScreen();
+    return ScanScreen(imageData: $extra);
   }
 }
 

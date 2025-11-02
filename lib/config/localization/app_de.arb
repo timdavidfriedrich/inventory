@@ -9,6 +9,7 @@
  "common_add": "Hinzufügen",
  "error_common": "Ein Fehler ist aufgetreten.",
  "error_camera_picture": "Das Aufnehmen ist fehlgeschlagen.",
+ "scan_failed_message": "Beim Analysieren des Fotos ist ein Fehler aufgetreten. KI-Vorschläge sind nicht verfügbar.",
  "screen_overview": "Inventar",
  "screen_declutter": "Ausmisten",
  "screen_tasks": "Aufgaben",

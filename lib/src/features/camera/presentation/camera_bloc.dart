@@ -35,13 +35,17 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
   ) async {
     if (state is CameraReady) {
       final controller = (state as CameraReady).controller;
-      await controller.takePicture().then((XFile file) async {
+      try {
+        final file = await controller.takePicture();
         final croppedFile = await file.cropToSquare();
         final imageData = await croppedFile.readAsBytes();
+
+        await controller.dispose();
+
         emit(CameraPictureTaken(controller, imageData));
-      }).catchError((error) {
+      } catch (error) {
         emit(CameraError(error.toString()));
-      });
+      }
     } else {
       emit(const CameraError('Camera is not ready'));
     }
@@ -50,13 +54,32 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
   void _onCameraRetry(
     CameraRetry event,
     Emitter<CameraState> emit,
-  ) {
+  ) async {
     final controller = event.controller;
     if (controller == null) {
       emit(const CameraError("Retry failed. Camera controller is null"));
       return;
     }
-    emit(CameraReady(controller));
+
+    try {
+      await controller.dispose();
+
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) {
+        emit(const CameraError("No cameras available"));
+        return;
+      }
+
+      final newController = CameraController(
+        cameras.first,
+        ResolutionPreset.high,
+        enableAudio: false,
+      );
+      await newController.initialize();
+      emit(CameraReady(newController));
+    } catch (e) {
+      emit(CameraError("Failed to reinitialize camera: $e"));
+    }
   }
 
   void _onCameraSavePicture(

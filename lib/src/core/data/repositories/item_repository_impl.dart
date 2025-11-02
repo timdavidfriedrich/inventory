@@ -1,10 +1,10 @@
-import 'package:flutter/rendering.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inventory/src/core/data/datasources/local_database_data_source.dart';
 import 'package:inventory/src/core/data/mappers/item_mappers.dart';
 import 'package:inventory/src/core/domain/entities/app_result.dart';
 import 'package:inventory/src/core/domain/entities/item.dart';
 import 'package:inventory/src/core/domain/repositories/item_repository.dart';
+import 'package:log/log.dart';
 
 @LazySingleton(as: ItemRepository)
 class ItemRepositoryImpl implements ItemRepository {
@@ -20,14 +20,13 @@ class ItemRepositoryImpl implements ItemRepository {
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
       return AppResult.success(items);
     }).handleError((error, stackTrace) {
-      // TODO: Replace debugPrint with custom log class
-      debugPrint('Error in watchItems stream: $error');
+      Log.error("Error in watchItems stream", exception: error);
       return AppResult.error(Exception(error));
     });
   }
 
   @override
-  Future<AppResult<Item>> getItemById(int id) async {
+  Future<AppResult<Item?>> getItemById(int id) async {
     try {
       final ldbItem = await _localDataSource.getItemById(id);
       if (ldbItem == null) {

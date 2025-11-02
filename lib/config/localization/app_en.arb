@@ -22,5 +22,6 @@
   "screen_overview": "Inventory",
   "screen_scan": "Capture a new item",
   "screen_settings": "Settings",
-  "screen_tasks": "Tasks"
+  "screen_tasks": "Tasks",
+  "scan_failed_message": "Failed to analyze image. AI suggestions are unavailable."
 }

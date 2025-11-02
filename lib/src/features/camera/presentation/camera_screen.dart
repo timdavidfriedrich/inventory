@@ -57,7 +57,7 @@ class _CameraScreenBuilder extends HookWidget {
           CameraReady() => const _CameraScreen(),
           CameraPictureTaken() => const _CameraPictureTakenScreen(),
           CameraError() => const ErrorScreen(),
-          CameraDone() => SizedBox.shrink(), // ! TODO: Handle done state
+          CameraDone() => SizedBox.shrink(),
         };
       },
     );

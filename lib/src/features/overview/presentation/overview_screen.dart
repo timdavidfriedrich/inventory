@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
+import 'package:inventory/src/core/presentation/coordinators/capture_flow_coordinator.dart';
 import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
+import 'package:inventory/src/core/presentation/utils/app_icons.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
@@ -66,10 +68,8 @@ class OverviewScreen extends StatelessWidget with TabScreen {
       floatingActionButton: context.isIos
           ? null
           : FloatingActionButton(
-              // TODO: Don't call CameraRoute but new ScanController that calls camera, 
-              // awaits picture and then scans it
-              onPressed: () => CameraRoute().push(context),
-              child: const Icon(Icons.add),
+              onPressed: () => CaptureFlowCoordinator.startCaptureFlow(context),
+              child: Icon(AppIcons.add(context)),
             ),
     );
   }
@@ -85,12 +85,12 @@ class _MaterialAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: const Icon(Icons.settings_outlined),
+        icon: Icon(AppIcons.settings(context)),
         onPressed: () => SettingsRoute().push(context),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.archive_outlined),
+          icon: Icon(AppIcons.archive(context)),
           onPressed: () => ArchiveRoute().push(context),
         ),
       ],
@@ -139,13 +139,13 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: GestureDetector(
         onTap: openCupertinoMenu,
         child: Icon(
-          CupertinoIcons.ellipsis_vertical_circle,
+          AppIcons.more(context),
         ),
       ),
       trailing: GestureDetector(
-        onTap: () => ScanRoute().push(context),
+        onTap: () => CaptureFlowCoordinator.startCaptureFlow(context),
         child: Icon(
-          CupertinoIcons.plus_rectangle_fill,
+          AppIcons.add(context),
           color: context.c.primary,
           size: Dimensions.semiExtraLargeIconSize,
         ),

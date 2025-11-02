@@ -77,4 +77,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screen_tasks => 'Tasks';
+
+  @override
+  String get scan_failed_message =>
+      'Failed to analyze image. AI suggestions are unavailable.';
 }

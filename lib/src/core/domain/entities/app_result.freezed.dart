@@ -43,9 +43,9 @@ class $AppResultCopyWith<T, $Res> {
 /// @nodoc
 
 class Success<T> with DiagnosticableTreeMixin implements AppResult<T> {
-  const Success(this.data);
+  const Success(this.value);
 
-  final T data;
+  final T value;
 
   /// Create a copy of AppResult
   /// with the given fields replaced by the non-null parameter values.
@@ -58,7 +58,7 @@ class Success<T> with DiagnosticableTreeMixin implements AppResult<T> {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
       ..add(DiagnosticsProperty('type', 'AppResult<$T>.success'))
-      ..add(DiagnosticsProperty('data', data));
+      ..add(DiagnosticsProperty('value', value));
   }
 
   @override
@@ -66,16 +66,16 @@ class Success<T> with DiagnosticableTreeMixin implements AppResult<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Success<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
+            const DeepCollectionEquality().equals(other.value, value));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppResult<$T>.success(data: $data)';
+    return 'AppResult<$T>.success(value: $value)';
   }
 }
 
@@ -85,7 +85,7 @@ abstract mixin class $SuccessCopyWith<T, $Res>
   factory $SuccessCopyWith(Success<T> value, $Res Function(Success<T>) _then) =
       _$SuccessCopyWithImpl;
   @useResult
-  $Res call({T data});
+  $Res call({T value});
 }
 
 /// @nodoc
@@ -99,12 +99,12 @@ class _$SuccessCopyWithImpl<T, $Res> implements $SuccessCopyWith<T, $Res> {
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? data = freezed,
+    Object? value = freezed,
   }) {
     return _then(Success<T>(
-      freezed == data
-          ? _self.data
-          : data // ignore: cast_nullable_to_non_nullable
+      freezed == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
               as T,
     ));
   }
@@ -176,31 +176,6 @@ class _$ErrorCopyWithImpl<T, $Res> implements $ErrorCopyWith<T, $Res> {
           : error // ignore: cast_nullable_to_non_nullable
               as Exception,
     ));
-  }
-}
-
-/// @nodoc
-
-class Empty<T> with DiagnosticableTreeMixin implements AppResult<T> {
-  const Empty();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties..add(DiagnosticsProperty('type', 'AppResult<$T>.empty'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Empty<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppResult<$T>.empty()';
   }
 }
 
