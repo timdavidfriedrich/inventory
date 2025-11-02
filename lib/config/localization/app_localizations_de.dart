@@ -32,6 +32,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get common_save => 'Speichern';
 
   @override
+  String get camera_error_message =>
+      'Es ist ein Problem bei der Kamera aufgetreten. Bitte versuchen Sie es später erneut.';
+
+  @override
   String get details_add_tag => 'Kategorie hinzufügen';
 
   @override

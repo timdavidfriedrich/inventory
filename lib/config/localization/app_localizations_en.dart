@@ -31,6 +31,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get common_save => 'Save';
 
   @override
+  String get camera_error_message =>
+      'There was a problem with the camera. Please try again later.';
+
+  @override
   String get details_add_tag => 'Add tag';
 
   @override

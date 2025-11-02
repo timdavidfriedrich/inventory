@@ -7,6 +7,7 @@
   "common_cancel": "Cancel",
   "common_error": "An error occurred.\nPlease try again later.",
   "common_save": "Save",
+  "camera_error_message": "There was a problem with the camera. Please try again later.",
   "details_add_tag": "Add tag",
   "details_location": "Location",
   "details_name": "Name",

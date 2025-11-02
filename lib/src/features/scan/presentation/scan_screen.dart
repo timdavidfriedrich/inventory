@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
 import 'package:inventory/src/core/domain/entities/scan_result.dart';
-import 'package:inventory/src/core/presentation/error_screen.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/loading_screen.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
@@ -58,7 +57,7 @@ class ScanScreen extends StatelessWidget {
           return switch (state) {
             ScanLoading() => const LoadingScreen(),
             ScanSuccess() => const _ScanSuccessScreen(),
-            ScanError() => const ErrorScreen(),
+            ScanError() => const SizedBox.shrink(),
           };
         },
       ),

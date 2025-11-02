@@ -140,6 +140,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get common_save;
 
+  /// No description provided for @camera_error_message.
+  ///
+  /// In en, this message translates to:
+  /// **'There was a problem with the camera. Please try again later.'**
+  String get camera_error_message;
+
   /// No description provided for @details_add_tag.
   ///
   /// In en, this message translates to:

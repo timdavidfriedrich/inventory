@@ -5,17 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
-import 'package:inventory/src/core/presentation/error_screen.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/loading_screen.dart';
 import 'package:inventory/src/core/presentation/utils/app_icons.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/widgets/floating_toolbar.dart';
-import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
 import 'package:inventory/src/features/camera/presentation/camera_bloc.dart';
 import 'package:inventory/src/features/camera/presentation/camera_event.dart';
 import 'package:inventory/src/features/camera/presentation/camera_state.dart';
 import 'package:inventory/src/features/camera/presentation/hooks/use_camera_controller.dart';
+import 'package:log/log.dart';
 
 class CameraScreen extends HookWidget {
   static const String routeName = '/camera';
@@ -45,10 +44,32 @@ class _CameraScreenBuilder extends HookWidget {
       },
     );
     return BlocConsumer<CameraBloc, CameraState>(
-      listenWhen: (previous, current) => current is CameraDone,
+      listenWhen: (previous, current) => current is CameraDone || current is CameraError,
       listener: (context, state) {
-        final imageData = (state as CameraDone).imageData;
-        context.pop(imageData);
+        switch (state) {
+          case CameraError():
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.s.camera_error_message),
+                duration: Duration(seconds: 3),
+              ),
+            );
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              try {
+                if (context.mounted) {
+                  context.pop(null);
+                }
+              } catch (e) {
+                Log.warning("Error popping: $e");
+              }
+            });
+          case CameraDone():
+            final imageData = state.imageData;
+            context.pop(imageData);
+          default:
+            return;
+        }
       },
       buildWhen: (previous, current) => current is! CameraDone,
       builder: (context, state) {
@@ -56,8 +77,8 @@ class _CameraScreenBuilder extends HookWidget {
           CameraLoading() => const LoadingScreen(),
           CameraReady() => const _CameraScreen(),
           CameraPictureTaken() => const _CameraPictureTakenScreen(),
-          CameraError() => const ErrorScreen(),
-          CameraDone() => SizedBox.shrink(),
+          CameraError() => const SizedBox.shrink(),
+          CameraDone() => const SizedBox.shrink(),
         };
       },
     );
@@ -168,7 +189,7 @@ class _PictureBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<CameraBloc>().state;
     if (state is! CameraPictureTaken) {
-      return const VerticalErrorWidget();
+      return const SizedBox.shrink();
     }
     return AspectRatio(
       aspectRatio: 1,
