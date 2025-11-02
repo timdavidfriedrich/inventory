@@ -37,10 +37,10 @@ import 'package:inventory/src/features/details/presentation/details_bloc.dart'
     as _i778;
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
     as _i364;
-import 'package:inventory/src/features/scan/data/datasources/dummy_image_scan_data_source.dart'
-    as _i932;
 import 'package:inventory/src/features/scan/data/datasources/image_scan_data_source.dart'
     as _i218;
+import 'package:inventory/src/features/scan/data/datasources/remote_image_scan_data_source_impl.dart'
+    as _i121;
 import 'package:inventory/src/features/scan/data/repositories/image_scan_repository_impl.dart'
     as _i612;
 import 'package:inventory/src/features/scan/domain/repositories/image_scan_repository.dart'
@@ -67,7 +67,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i150.CameraBloc>(() => _i150.CameraBloc());
     gh.singleton<_i249.AppRouter>(() => _i249.AppRouter());
     gh.lazySingleton<_i218.ImageScanDataSource>(
-        () => _i932.DummyImageScanDataSourceImpl());
+        () => _i121.RemoteImageScanDataSourceImpl());
     gh.lazySingleton<_i653.LocalDatabaseDataSource>(() =>
         _i920.LocalDatabaseDataSourceImpl(
             localDatabase: gh<_i186.LocalDatabase>()));
