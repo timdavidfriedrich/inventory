@@ -90,20 +90,58 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<DetailsBloc>().state;
+    if (state is! DetailsSuccess) {
+      return const SizedBox.shrink();
+    }
+    final imageData = state.item.image;
     return Center(
       child: Container(
+        clipBehavior: Clip.hardEdge,
         width: _imageSize,
         height: _imageSize,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
           border: Border.all(
             color: context.c.outlineVariant,
-            width: Dimensions.mediumBorderWidth,
+            width: Dimensions.semiLargeBorderWidth,
           ),
+          color: Theme.of(context).colorScheme.surface,
+          image: imageData == null
+              ? null
+              : DecorationImage(
+                  fit: BoxFit.cover,
+                  image: MemoryImage(imageData),
+                ),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
-          child: Placeholder(),
+        child: _OpenCameraButton(),
+      ),
+    );
+  }
+}
+
+class _OpenCameraButton extends StatelessWidget {
+  const _OpenCameraButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      borderRadius: BorderRadius.circular(
+        Dimensions.smallBorderRadius - Dimensions.mediumBorderWidth,
+      ),
+      clipBehavior: Clip.hardEdge,
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () async {
+          await CameraRoute().push(context).then((imageData) async {
+            if (context.mounted) {
+              context.read<DetailsBloc>().add(DetailsUpdateImage(imageData));
+            }
+          });
+        },
+        child: Icon(
+          AppIcons.camera(context),
+          size: Dimensions.largeIconSize,
         ),
       ),
     );
@@ -278,15 +316,26 @@ class _FloatingActionButtons extends StatelessWidget {
               onPressed: () {
                 ArchiveItemConfirmDialog.show(context).then((confirmed) {
                   if (confirmed == true && context.mounted) {
+                    context.read<DetailsBloc>().add(DetailsDeleteItem());
+                  }
+                });
+              },
+              child: Icon(AppIcons.delete(context), color: context.c.error),
+            ),
+            const FloatingToolbarDivider(),
+            FloatingToolbarButton(
+              onPressed: () {
+                ArchiveItemConfirmDialog.show(context).then((confirmed) {
+                  if (confirmed == true && context.mounted) {
                     context.read<DetailsBloc>().add(DetailsArchiveItem());
                   }
                 });
               },
-              child: Icon(AppIcons.archive(context), color: context.c.error),
+              child: Icon(AppIcons.archive(context)),
             ),
             const FloatingToolbarDivider(),
             FloatingToolbarButton(
-              onPressed: () => context.read<DetailsBloc>().add(DetailsManageView()),
+              onPressed: () => context.read<DetailsBloc>().add(DetailsDeclutterItem()),
               child: Icon(AppIcons.declutter(context)),
             ),
           ],

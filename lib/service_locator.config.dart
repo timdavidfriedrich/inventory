@@ -31,10 +31,22 @@ import 'package:inventory/src/core/domain/usecases/item/save_item_use_case.dart'
     as _i413;
 import 'package:inventory/src/core/presentation/app_router.dart' as _i249;
 import 'package:inventory/src/core/presentation/home_cubit.dart' as _i753;
+import 'package:inventory/src/features/camera/presentation/camera_bloc.dart'
+    as _i150;
 import 'package:inventory/src/features/details/presentation/details_bloc.dart'
     as _i778;
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
     as _i364;
+import 'package:inventory/src/features/scan/data/datasources/image_scan_data_source.dart'
+    as _i218;
+import 'package:inventory/src/features/scan/data/datasources/remote_image_scan_data_source_impl.dart'
+    as _i121;
+import 'package:inventory/src/features/scan/data/repositories/image_scan_repository_impl.dart'
+    as _i612;
+import 'package:inventory/src/features/scan/domain/repositories/image_scan_repository.dart'
+    as _i142;
+import 'package:inventory/src/features/scan/presentation/scan_bloc.dart'
+    as _i361;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -52,20 +64,28 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i753.HomeCubit>(() => _i753.HomeCubit());
+    gh.factory<_i150.CameraBloc>(() => _i150.CameraBloc());
     gh.singleton<_i249.AppRouter>(() => _i249.AppRouter());
+    gh.lazySingleton<_i218.ImageScanDataSource>(
+        () => _i121.RemoteImageScanDataSourceImpl());
     gh.lazySingleton<_i653.LocalDatabaseDataSource>(() =>
         _i920.LocalDatabaseDataSourceImpl(
             localDatabase: gh<_i186.LocalDatabase>()));
     gh.lazySingleton<_i568.ItemRepository>(() => _i680.ItemRepositoryImpl(
         localDataSource: gh<_i653.LocalDatabaseDataSource>()));
+    gh.lazySingleton<_i142.ImageScanRepository>(() =>
+        _i612.ImageScanRepositoryImpl(
+            imageScanDataSource: gh<_i218.ImageScanDataSource>()));
+    gh.factory<_i361.ScanBloc>(
+        () => _i361.ScanBloc(gh<_i142.ImageScanRepository>()));
     gh.factory<_i274.GetAllItemsUseCase>(
         () => _i274.GetAllItemsUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i12.ArchiveItemUseCase>(
+        () => _i12.ArchiveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i413.SaveItemUseCase>(
         () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i989.GetItemByIdUseCase>(
         () => _i989.GetItemByIdUseCase(repository: gh<_i568.ItemRepository>()));
-    gh.factory<_i12.ArchiveItemUseCase>(
-        () => _i12.ArchiveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i778.DetailsBloc>(() => _i778.DetailsBloc(
           gh<_i989.GetItemByIdUseCase>(),
           gh<_i413.SaveItemUseCase>(),

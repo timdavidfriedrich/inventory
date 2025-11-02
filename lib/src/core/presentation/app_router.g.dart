@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $archiveRoute,
       $detailsRoute,
       $detailsFromScanRoute,
+      $cameraRoute,
       $scanRoute,
       $settingsRoute,
     ];
@@ -146,17 +147,17 @@ mixin _$DetailsFromScanRoute on GoRouteData {
       context.replace(location, extra: _self.$extra);
 }
 
-RouteBase get $scanRoute => GoRouteData.$route(
-      path: '/scan',
-      factory: _$ScanRoute._fromState,
+RouteBase get $cameraRoute => GoRouteData.$route(
+      path: '/camera',
+      factory: _$CameraRoute._fromState,
     );
 
-mixin _$ScanRoute on GoRouteData {
-  static ScanRoute _fromState(GoRouterState state) => const ScanRoute();
+mixin _$CameraRoute on GoRouteData {
+  static CameraRoute _fromState(GoRouterState state) => const CameraRoute();
 
   @override
   String get location => GoRouteData.$location(
-        '/scan',
+        '/camera',
       );
 
   @override
@@ -171,6 +172,39 @@ mixin _$ScanRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $scanRoute => GoRouteData.$route(
+      path: '/scan',
+      factory: _$ScanRoute._fromState,
+    );
+
+mixin _$ScanRoute on GoRouteData {
+  static ScanRoute _fromState(GoRouterState state) => ScanRoute(
+        state.extra as Uint8List,
+      );
+
+  ScanRoute get _self => this as ScanRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/scan',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $settingsRoute => GoRouteData.$route(

@@ -104,17 +104,11 @@ abstract class AppLocalizations {
   /// **'Home Inventory'**
   String get appTitle;
 
-  /// No description provided for @common_error.
+  /// No description provided for @common_add.
   ///
   /// In en, this message translates to:
-  /// **'An error occurred.\nPlease try again later.'**
-  String get common_error;
-
-  /// No description provided for @common_cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get common_cancel;
+  /// **'Add'**
+  String get common_add;
 
   /// No description provided for @common_archive.
   ///
@@ -128,59 +122,41 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to archive this item?'**
   String get common_archive_confirm;
 
+  /// No description provided for @common_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get common_cancel;
+
+  /// No description provided for @common_error.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred.\nPlease try again later.'**
+  String get common_error;
+
   /// No description provided for @common_save.
   ///
   /// In en, this message translates to:
   /// **'Save'**
   String get common_save;
 
-  /// No description provided for @common_add.
+  /// No description provided for @camera_error_message.
   ///
   /// In en, this message translates to:
-  /// **'Add'**
-  String get common_add;
+  /// **'There was a problem with the camera. Please try again later.'**
+  String get camera_error_message;
 
-  /// No description provided for @screen_overview.
+  /// No description provided for @details_add_tag.
   ///
   /// In en, this message translates to:
-  /// **'Inventory'**
-  String get screen_overview;
+  /// **'Add tag'**
+  String get details_add_tag;
 
-  /// No description provided for @screen_declutter.
+  /// No description provided for @details_location.
   ///
   /// In en, this message translates to:
-  /// **'Declutter'**
-  String get screen_declutter;
-
-  /// No description provided for @screen_tasks.
-  ///
-  /// In en, this message translates to:
-  /// **'Tasks'**
-  String get screen_tasks;
-
-  /// No description provided for @screen_archive.
-  ///
-  /// In en, this message translates to:
-  /// **'Archive'**
-  String get screen_archive;
-
-  /// No description provided for @screen_settings.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get screen_settings;
-
-  /// No description provided for @screen_scan.
-  ///
-  /// In en, this message translates to:
-  /// **'Capture a new item'**
-  String get screen_scan;
-
-  /// No description provided for @screen_details.
-  ///
-  /// In en, this message translates to:
-  /// **'Item details'**
-  String get screen_details;
+  /// **'Location'**
+  String get details_location;
 
   /// No description provided for @details_name.
   ///
@@ -212,17 +188,65 @@ abstract class AppLocalizations {
   /// **'Tags'**
   String get details_tags;
 
-  /// No description provided for @details_add_tag.
+  /// No description provided for @error_common.
   ///
   /// In en, this message translates to:
-  /// **'Add tag'**
-  String get details_add_tag;
+  /// **'An error occurred.'**
+  String get error_common;
 
-  /// No description provided for @details_location.
+  /// No description provided for @error_camera_picture.
   ///
   /// In en, this message translates to:
-  /// **'Location'**
-  String get details_location;
+  /// **'Unable to take a picture.'**
+  String get error_camera_picture;
+
+  /// No description provided for @screen_archive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get screen_archive;
+
+  /// No description provided for @screen_declutter.
+  ///
+  /// In en, this message translates to:
+  /// **'Declutter'**
+  String get screen_declutter;
+
+  /// No description provided for @screen_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Item details'**
+  String get screen_details;
+
+  /// No description provided for @screen_overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get screen_overview;
+
+  /// No description provided for @screen_scan.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture a new item'**
+  String get screen_scan;
+
+  /// No description provided for @screen_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get screen_settings;
+
+  /// No description provided for @screen_tasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get screen_tasks;
+
+  /// No description provided for @scan_failed_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to analyze image. AI suggestions are unavailable.'**
+  String get scan_failed_message;
 }
 
 class _AppLocalizationsDelegate

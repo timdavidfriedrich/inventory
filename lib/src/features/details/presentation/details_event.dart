@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:inventory/src/core/domain/entities/scan_result.dart';
 
 sealed class DetailsEvent {
@@ -11,6 +13,11 @@ class DetailsInit extends DetailsEvent {
     this.id,
     this.scanResult,
   });
+}
+
+class DetailsUpdateImage extends DetailsEvent {
+  final Uint8List? imageData;
+  const DetailsUpdateImage(this.imageData);
 }
 
 class DetailsUpdateName extends DetailsEvent {
@@ -39,6 +46,14 @@ class DetailsSaveItem extends DetailsEvent {
 
 class DetailsArchiveItem extends DetailsEvent {
   const DetailsArchiveItem();
+}
+
+class DetailsDeleteItem extends DetailsEvent {
+  const DetailsDeleteItem();
+}
+
+class DetailsDeclutterItem extends DetailsEvent {
+  const DetailsDeclutterItem();
 }
 
 class DetailsManageView extends DetailsEvent {

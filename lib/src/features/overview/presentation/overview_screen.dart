@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
+import 'package:inventory/src/core/presentation/coordinators/capture_flow_coordinator.dart';
 import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/app_router.dart';
+import 'package:inventory/src/core/presentation/utils/app_icons.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
@@ -40,11 +42,22 @@ class OverviewScreen extends StatelessWidget with TabScreen {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return ListTile(
-                      onTap: () => DetailsRoute(id: item.id).push(context),
-                      leading: const Icon(Icons.image_not_supported_outlined),
-                      title: Text(item.name),
-                      subtitle: item.notes != null ? Text(item.notes!) : null,
+                    return Padding(
+                      padding: const EdgeInsets.all(Dimensions.smallSpacing),
+                      child: ListTile(
+                        onTap: () => DetailsRoute(id: item.id).push(context),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
+                          child: item.image != null
+                              ? Image.memory(item.image!)
+                              : AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Container(color: context.c.surfaceContainerHighest),
+                                ),
+                        ),
+                        title: Text(item.name),
+                        subtitle: item.notes != null ? Text(item.notes!) : null,
+                      ),
                     );
                   },
                 ),
@@ -55,8 +68,8 @@ class OverviewScreen extends StatelessWidget with TabScreen {
       floatingActionButton: context.isIos
           ? null
           : FloatingActionButton(
-              onPressed: () => ScanRoute().push(context),
-              child: const Icon(Icons.add),
+              onPressed: () => CaptureFlowCoordinator.startCaptureFlow(context),
+              child: Icon(AppIcons.add(context)),
             ),
     );
   }
@@ -72,12 +85,12 @@ class _MaterialAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: const Icon(Icons.settings_outlined),
+        icon: Icon(AppIcons.settings(context)),
         onPressed: () => SettingsRoute().push(context),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.archive_outlined),
+          icon: Icon(AppIcons.archive(context)),
           onPressed: () => ArchiveRoute().push(context),
         ),
       ],
@@ -126,13 +139,13 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: GestureDetector(
         onTap: openCupertinoMenu,
         child: Icon(
-          CupertinoIcons.ellipsis_vertical_circle,
+          AppIcons.more(context),
         ),
       ),
       trailing: GestureDetector(
-        onTap: () => ScanRoute().push(context),
+        onTap: () => CaptureFlowCoordinator.startCaptureFlow(context),
         child: Icon(
-          CupertinoIcons.plus_rectangle_fill,
+          AppIcons.add(context),
           color: context.c.primary,
           size: Dimensions.semiExtraLargeIconSize,
         ),

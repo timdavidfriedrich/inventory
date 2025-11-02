@@ -12,11 +12,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
-  String get common_error =>
-      'Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.';
-
-  @override
-  String get common_cancel => 'Abbrechen';
+  String get common_add => 'Hinzufügen';
 
   @override
   String get common_archive => 'Archivieren';
@@ -26,31 +22,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bist du sicher, dass du dieses Objekt archivieren möchtest?';
 
   @override
+  String get common_cancel => 'Abbrechen';
+
+  @override
+  String get common_error =>
+      'Ein Fehler ist aufgetreten.\nBitte versuche es später erneut.';
+
+  @override
   String get common_save => 'Speichern';
 
   @override
-  String get common_add => 'Hinzufügen';
+  String get camera_error_message =>
+      'Es ist ein Problem bei der Kamera aufgetreten. Bitte versuchen Sie es später erneut.';
 
   @override
-  String get screen_overview => 'Inventar';
+  String get details_add_tag => 'Kategorie hinzufügen';
 
   @override
-  String get screen_declutter => 'Ausmisten';
-
-  @override
-  String get screen_tasks => 'Aufgaben';
-
-  @override
-  String get screen_archive => 'Archiv';
-
-  @override
-  String get screen_settings => 'Einstellungen';
-
-  @override
-  String get screen_scan => 'Scanne ein Objekt';
-
-  @override
-  String get screen_details => 'Objekt-Details';
+  String get details_location => 'Standort';
 
   @override
   String get details_name => 'Name';
@@ -68,8 +57,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get details_tags => 'Kategorien';
 
   @override
-  String get details_add_tag => 'Kategorie hinzufügen';
+  String get error_common => 'Ein Fehler ist aufgetreten.';
 
   @override
-  String get details_location => 'Standort';
+  String get error_camera_picture => 'Das Aufnehmen ist fehlgeschlagen.';
+
+  @override
+  String get screen_archive => 'Archiv';
+
+  @override
+  String get screen_declutter => 'Ausmisten';
+
+  @override
+  String get screen_details => 'Objekt-Details';
+
+  @override
+  String get screen_overview => 'Inventar';
+
+  @override
+  String get screen_scan => 'Scanne ein Objekt';
+
+  @override
+  String get screen_settings => 'Einstellungen';
+
+  @override
+  String get screen_tasks => 'Aufgaben';
+
+  @override
+  String get scan_failed_message =>
+      'Beim Analysieren des Fotos ist ein Fehler aufgetreten. KI-Vorschläge sind nicht verfügbar.';
 }

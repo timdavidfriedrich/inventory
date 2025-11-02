@@ -13,6 +13,10 @@ class AppIcons {
     return context.isIos ? CupertinoIcons.archivebox : Icons.archive_outlined;
   }
 
+  static IconData delete(BuildContext context) {
+    return context.isIos ? CupertinoIcons.trash : Icons.delete_outline;
+  }
+
   static IconData error(BuildContext context) {
     return context.isIos ? CupertinoIcons.exclamationmark_triangle : Icons.warning_amber_rounded;
   }
@@ -47,6 +51,14 @@ class AppIcons {
 
   static IconData undo(BuildContext context) {
     return context.isIos ? CupertinoIcons.arrow_uturn_left : Icons.undo_outlined;
+  }
+
+  static IconData retry(BuildContext context) {
+    return context.isIos ? CupertinoIcons.arrow_counterclockwise : Icons.replay;
+  }
+
+  static IconData done(BuildContext context) {
+    return context.isIos ? CupertinoIcons.check_mark : Icons.check;
   }
 
   static IconData overview(BuildContext context) {

@@ -12,10 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Home Inventory';
 
   @override
-  String get common_error => 'An error occurred.\nPlease try again later.';
-
-  @override
-  String get common_cancel => 'Cancel';
+  String get common_add => 'Add';
 
   @override
   String get common_archive => 'Archive';
@@ -25,31 +22,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to archive this item?';
 
   @override
+  String get common_cancel => 'Cancel';
+
+  @override
+  String get common_error => 'An error occurred.\nPlease try again later.';
+
+  @override
   String get common_save => 'Save';
 
   @override
-  String get common_add => 'Add';
+  String get camera_error_message =>
+      'There was a problem with the camera. Please try again later.';
 
   @override
-  String get screen_overview => 'Inventory';
+  String get details_add_tag => 'Add tag';
 
   @override
-  String get screen_declutter => 'Declutter';
-
-  @override
-  String get screen_tasks => 'Tasks';
-
-  @override
-  String get screen_archive => 'Archive';
-
-  @override
-  String get screen_settings => 'Settings';
-
-  @override
-  String get screen_scan => 'Capture a new item';
-
-  @override
-  String get screen_details => 'Item details';
+  String get details_location => 'Location';
 
   @override
   String get details_name => 'Name';
@@ -67,8 +56,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get details_tags => 'Tags';
 
   @override
-  String get details_add_tag => 'Add tag';
+  String get error_common => 'An error occurred.';
 
   @override
-  String get details_location => 'Location';
+  String get error_camera_picture => 'Unable to take a picture.';
+
+  @override
+  String get screen_archive => 'Archive';
+
+  @override
+  String get screen_declutter => 'Declutter';
+
+  @override
+  String get screen_details => 'Item details';
+
+  @override
+  String get screen_overview => 'Inventory';
+
+  @override
+  String get screen_scan => 'Capture a new item';
+
+  @override
+  String get screen_settings => 'Settings';
+
+  @override
+  String get screen_tasks => 'Tasks';
+
+  @override
+  String get scan_failed_message =>
+      'Failed to analyze image. AI suggestions are unavailable.';
 }

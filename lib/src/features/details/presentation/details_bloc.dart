@@ -20,12 +20,15 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     this._archiveItemUseCase,
   ) : super(DetailsLoading()) {
     on<DetailsInit>(_init);
+    on<DetailsUpdateImage>(_updateImage);
     on<DetailsUpdateName>(_updateName);
     on<DetailsUpdateNotes>(_updateNotes);
     on<DetailsAddTag>(_addTag);
     on<DetailsRemoveTag>(_removeTag);
     on<DetailsSaveItem>(_saveItem);
     on<DetailsArchiveItem>(_archiveItem);
+    on<DetailsDeleteItem>(_deleteItem);
+    on<DetailsDeclutterItem>(_declutterItem);
     on<DetailsManageView>((event, emit) {});
   }
 
@@ -52,7 +55,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     emit(DetailsLoading());
     _getItemByIdUseCase(id).then((result) {
       if (result is Success<Item?>) {
-        final item = result.data;
+        final item = result.value;
         if (item != null) {
           emit(DetailsSuccess(item: item));
         } else {
@@ -62,6 +65,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         emit(DetailsError(message: result.toString()));
       }
     });
+  }
+
+  void _updateImage(DetailsUpdateImage event, Emitter<DetailsState> emit) {
+    if (state is! DetailsSuccess) return;
+    final currentState = state as DetailsSuccess;
+    final updatedItem = currentState.item.copyWith(image: event.imageData);
+    emit(currentState.copyWith(item: updatedItem));
   }
 
   void _updateName(DetailsUpdateName event, Emitter<DetailsState> emit) {
@@ -118,5 +128,17 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         emit(DetailsError(message: result.error.toString()));
       }
     });
+  }
+
+  void _deleteItem(DetailsDeleteItem event, Emitter<DetailsState> emit) {
+    if (state is! DetailsSuccess) return;
+    // TODO: Implement delete logic
+    emit(const DetailsDone());
+  }
+
+  void _declutterItem(DetailsDeclutterItem event, Emitter<DetailsState> emit) {
+    if (state is! DetailsSuccess) return;
+    // TODO: Implement declutter logic
+    emit(const DetailsDone());
   }
 }

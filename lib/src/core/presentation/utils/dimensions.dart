@@ -46,6 +46,9 @@ class Dimensions {
   /// 2.0
   static const double mediumBorderWidth = 2.0;
 
+  /// 3.0
+  static const double semiLargeBorderWidth = 3.0;
+
   /// 4.0
   static const double largeBorderWidth = 4.0;
 
