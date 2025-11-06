@@ -89,6 +89,7 @@ class _MaterialAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () => SettingsRoute().push(context),
       ),
       title: Text(context.s.screen_overview),
+      centerTitle: true,
       actions: [
         IconButton(
           icon: Icon(AppIcons.archive(context)),
