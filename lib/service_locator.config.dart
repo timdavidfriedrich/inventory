@@ -33,6 +33,8 @@ import 'package:inventory/src/core/presentation/app_router.dart' as _i249;
 import 'package:inventory/src/core/presentation/home_cubit.dart' as _i753;
 import 'package:inventory/src/features/camera/presentation/camera_bloc.dart'
     as _i150;
+import 'package:inventory/src/features/declutter/presentation/declutter_bloc.dart'
+    as _i10;
 import 'package:inventory/src/features/details/presentation/details_bloc.dart'
     as _i778;
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart'
@@ -91,6 +93,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i413.SaveItemUseCase>(),
           gh<_i12.ArchiveItemUseCase>(),
         ));
+    gh.factory<_i10.DeclutterBloc>(
+        () => _i10.DeclutterBloc(gh<_i568.ItemRepository>()));
     gh.factory<_i364.OverviewBloc>(
         () => _i364.OverviewBloc(gh<_i274.GetAllItemsUseCase>()));
     return this;

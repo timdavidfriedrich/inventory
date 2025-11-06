@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inventory/src/core/domain/entities/location.dart';
+import 'package:inventory/src/core/domain/entities/task.dart';
 
 part 'item.freezed.dart';
 
@@ -16,6 +17,7 @@ abstract class Item with _$Item {
     @Default([]) List<String> suggestedTags,
     ItemCondition? condition,
     Location? location,
+    Task? currentTask,
   }) = _Item;
 }
 
