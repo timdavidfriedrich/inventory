@@ -125,14 +125,6 @@ class _DeclutterScreenState extends State<DeclutterScreen> {
               ],
             ),
           ),
-          Spacer(),
-          OutlinedButton.icon(
-            onPressed: () {},
-            // TODO: Localize
-            label: Text("Filter"),
-            icon: Icon(AppIcons.manage(context)),
-          ),
-          const SizedBox(height: Dimensions.extraLargeSpacing),
         ],
       ),
     );

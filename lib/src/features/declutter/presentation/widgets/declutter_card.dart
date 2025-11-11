@@ -150,10 +150,18 @@ class _DeclutterCardState extends State<DeclutterCard> with TickerProviderStateM
       ..translate(_position.dx, _position.dy)
       ..rotateZ(_angle);
 
+    final cardColor = Theme.brightnessOf(context) == Brightness.dark
+        ? context.c.surfaceContainer
+        : context.c.inverseSurface;
+
+    final onCardColor = Theme.brightnessOf(context) == Brightness.dark
+        ? context.c.onSurface
+        : context.c.onInverseSurface;
+
     final card = Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: context.c.surfaceContainer,
+      color: cardColor,
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -178,7 +186,7 @@ class _DeclutterCardState extends State<DeclutterCard> with TickerProviderStateM
                       end: Alignment.center,
                       stops: const [0.1, 1.0],
                       colors: [
-                        context.c.surfaceContainer,
+                        cardColor,
                         Colors.transparent,
                       ],
                     ),
@@ -190,7 +198,7 @@ class _DeclutterCardState extends State<DeclutterCard> with TickerProviderStateM
                   right: _cardPadding,
                   child: Text(
                     widget.item.name,
-                    style: context.t.headlineSmall,
+                    style: context.t.headlineSmall?.copyWith(color: onCardColor),
                   ),
                 ),
               ],
@@ -207,7 +215,7 @@ class _DeclutterCardState extends State<DeclutterCard> with TickerProviderStateM
                 Text(
                   // TODO: Replace with actual room name
                   "Badezimmer",
-                  style: context.t.titleMedium,
+                  style: context.t.titleMedium?.copyWith(color: onCardColor),
                 ),
                 const SizedBox(height: Dimensions.largeSpacing),
                 Row(
@@ -215,23 +223,23 @@ class _DeclutterCardState extends State<DeclutterCard> with TickerProviderStateM
                   children: [
                     Expanded(
                       child: FilledButton(
-                        onPressed: () {},
+                        onPressed: widget.onSwipeLeft,
                         // TODO: Localize
-                        child: const Text("Keep"),
+                        child: const Text("Toss"),
                       ),
                     ),
                     const SizedBox(width: Dimensions.mediumSpacing),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: widget.onSwipeUp,
                       // TODO: Localize
-                      child: const Text("Move"),
+                      child: Text("Move", style: TextStyle(color: onCardColor)),
                     ),
                     const SizedBox(width: Dimensions.mediumSpacing),
                     Expanded(
                       child: FilledButton(
-                        onPressed: () {},
+                        onPressed: widget.onSwipeRight,
                         // TODO: Localize
-                        child: const Text("Toss"),
+                        child: const Text("Keep"),
                       ),
                     ),
                   ],

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:inventory/src/core/data/models/ldb_item.dart';
 import 'package:inventory/src/core/domain/entities/item.dart';
+import 'package:inventory/src/core/domain/entities/task.dart';
 
 extension LdbItemMapper on LdbItem {
   Item toItem() {
@@ -14,18 +15,20 @@ extension LdbItemMapper on LdbItem {
       suggestedTags: suggestedTags,
       condition: condition != null ? ItemCondition.values[condition!] : null,
       notes: notes,
-      // The location relation would need its own mapping logic.
+      // TODO: location relation needs its own mapping logic
       location: null,
+      currentTask: currentTask != null ? Task.values[currentTask!] : null,
+      lastDeclutter: lastDeclutter,
     );
   }
 }
 
 extension ItemMapper on Item {
   LdbItem? toLdbItem() {
-    // If name is null or empty, return null
     if (name.isEmpty) {
       return null;
     }
+    // TODO: Map location
     final ldbItem = LdbItem(
       name: name,
       isArchived: isArchived,
@@ -34,6 +37,8 @@ extension ItemMapper on Item {
       suggestedTags: suggestedTags,
       condition: condition?.index,
       notes: notes,
+      currentTask: currentTask?.index,
+      lastDeclutter: lastDeclutter,
     );
     // Only set id, if not 0
     final itemId = id;

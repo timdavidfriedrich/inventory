@@ -5,14 +5,14 @@ import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
 import 'package:inventory/src/core/presentation/extensions/context_extensions.dart';
 import 'package:inventory/src/core/presentation/extensions/tab_screen_extensions.dart';
 import 'package:inventory/src/core/presentation/home_cubit.dart';
-import 'package:inventory/src/features/declutter/presentation/declutter_screen.dart';
+import 'package:inventory/src/features/declutter/presentation/hub/hub_screen.dart';
 import 'package:inventory/src/features/overview/presentation/overview_screen.dart';
 import 'package:inventory/src/features/tasks/presentation/tasks_screen.dart';
 import 'package:inventory/service_locator.dart';
 
 const List<TabScreen> _tabScreens = [
   OverviewScreen(),
-  DeclutterScreen(),
+  DeclutterHubScreen(),
   TasksScreen(),
 ];
 

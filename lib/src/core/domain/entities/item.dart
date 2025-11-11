@@ -18,6 +18,7 @@ abstract class Item with _$Item {
     ItemCondition? condition,
     Location? location,
     Task? currentTask,
+    DateTime? lastDeclutter,
   }) = _Item;
 }
 

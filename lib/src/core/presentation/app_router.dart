@@ -7,6 +7,7 @@ import 'package:inventory/src/core/domain/entities/scan_result.dart';
 import 'package:inventory/src/core/presentation/home_shell.dart';
 import 'package:inventory/src/features/archive/presentation/archive_screen.dart';
 import 'package:inventory/src/features/camera/presentation/camera_screen.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/swipe_screen.dart';
 import 'package:inventory/src/features/details/presentation/details_screen.dart';
 import 'package:inventory/src/features/scan/presentation/scan_screen.dart';
 import 'package:inventory/src/features/settings/presentation/settings_screen.dart';
@@ -106,5 +107,16 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingsScreen();
+  }
+}
+
+// DeclutterSwipeScreen route
+@TypedGoRoute<DeclutterSwipeRoute>(path: DeclutterSwipeScreen.routeName)
+class DeclutterSwipeRoute extends GoRouteData with _$DeclutterSwipeRoute {
+  final int? sessionId;
+  const DeclutterSwipeRoute({required this.sessionId});
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return DeclutterSwipeScreen(sessionId: sessionId);
   }
 }

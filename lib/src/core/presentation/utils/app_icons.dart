@@ -88,4 +88,16 @@ class AppIcons {
   static IconData tasksSelected(BuildContext context) {
     return context.isIos ? CupertinoIcons.square_list_fill : Icons.fact_check;
   }
+
+  static IconData quick(BuildContext context) {
+    return context.isIos ? CupertinoIcons.bolt : Icons.flash_on_outlined;
+  }
+
+  static IconData room(BuildContext context) {
+    return context.isIos ? CupertinoIcons.house : Icons.meeting_room_outlined;
+  }
+
+  static IconData tag(BuildContext context) {
+    return context.isIos ? CupertinoIcons.tag : Icons.label_outline;
+  }
 }

@@ -6,5 +6,6 @@ part 'app_result.freezed.dart';
 @freezed
 sealed class AppResult<T> with _$AppResult<T> {
   const factory AppResult.success(T value) = Success<T>;
+  const factory AppResult.empty() = Empty<T>;
   const factory AppResult.error(Exception error) = Error<T>;
 }

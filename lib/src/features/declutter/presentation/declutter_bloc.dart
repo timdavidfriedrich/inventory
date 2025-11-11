@@ -29,6 +29,7 @@ class DeclutterBloc extends Bloc<DeclutterEvent, DeclutterState> {
       onData: (result) {
         return switch (result) {
           Success(:var value) => DeclutterSuccess(items: value),
+          Empty() => const DeclutterSuccess(items: []),
           Error(:var error) => DeclutterError(message: error.toString()),
         };
       },
