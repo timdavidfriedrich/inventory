@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/service_locator.dart';
 import 'package:inventory/src/core/presentation/error_screen.dart';
@@ -8,10 +9,13 @@ import 'package:inventory/src/core/presentation/extensions/context_extensions.da
 import 'package:inventory/src/core/presentation/loading_screen.dart';
 import 'package:inventory/src/core/presentation/utils/app_icons.dart';
 import 'package:inventory/src/core/presentation/utils/dimensions.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/hooks/use_declutter_swipe_controller.dart';
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_bloc.dart';
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_event.dart';
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_state.dart';
-import 'package:inventory/src/features/declutter/presentation/widgets/declutter_card.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/widgets/declutter_swipe_card.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/widgets/declutter_swipe_stack.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/widgets/enums.dart';
 import 'package:log/log.dart';
 
 class DeclutterSwipeScreen extends StatelessWidget {
@@ -50,14 +54,65 @@ class DeclutterSwipeScreen extends StatelessWidget {
   }
 }
 
-class _DeclutterSwipeScreen extends StatelessWidget {
+class _DeclutterSwipeScreen extends HookWidget {
   const _DeclutterSwipeScreen();
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<SwipeBloc>().state;
+    if (state is! SwipeItemLoadSuccess) {
+      Log.error("DeclutterSwipeScreen built in invalid state: $state");
+      return const SizedBox.shrink();
+    }
+    final item = state.currentItem;
+
+    void toss() => context.read<SwipeBloc>().add(SwipeItemActioned(item.id, SwipeAction.toss));
+    void move() => context.read<SwipeBloc>().add(SwipeItemActioned(item.id, SwipeAction.move));
+    void keep() => context.read<SwipeBloc>().add(SwipeItemActioned(item.id, SwipeAction.keep));
+
+    final swipeController = useDeclutterSwipeController();
     return Scaffold(
       appBar: context.isIos ? const _CupertinoAppBar() : const _MaterialAppBar(),
-      body: const _DeclutterCardStack(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.largeSpacing,
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: Dimensions.largeSpacing),
+              AspectRatio(
+                aspectRatio: 2 / 3,
+                child: Container(
+                  color: Colors.red,
+                  child: DeclutterSwipeStack(
+                    controller: swipeController,
+                    cardCount: state.remainingItems.length,
+                    swipeOptions: SwipeOptions.only(left: true, right: true, up: true),
+                    onSwipeEnd: (previousIndex, targetIndex, activity) {
+                      if (previousIndex == targetIndex) return;
+                      return switch (activity.direction) {
+                        AxisDirection.left => toss(),
+                        AxisDirection.up => move(),
+                        AxisDirection.right => keep(),
+                        AxisDirection.down => {},
+                      };
+                    },
+                    cardBuilder: (context, index) {
+                      return DeclutterSwipeCard(
+                        item: state.remainingItems[index],
+                        onToss: swipeController.swipeLeft,
+                        onMove: swipeController.swipeUp,
+                        onKeep: swipeController.swipeRight,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -123,105 +178,6 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: context.c.primary,
           size: Dimensions.semiExtraLargeIconSize,
         ),
-      ),
-    );
-  }
-}
-
-class _DeclutterCardStack extends StatefulWidget {
-  const _DeclutterCardStack();
-
-  @override
-  State<_DeclutterCardStack> createState() => _DeclutterCardStackState();
-}
-
-class _DeclutterCardStackState extends State<_DeclutterCardStack> {
-  double _dragProgress = 0.0;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.watch<SwipeBloc>().state;
-    if (state is! SwipeItemLoadSuccess) {
-      return const SizedBox.shrink();
-    }
-
-    // TOOD: Add card stack instead of only 1 card
-    // if (items.isEmpty) {
-    //   return const Center(
-    //     child: Text("All done!"),
-    //   );
-    // }
-
-    final topItem = state.item; //items.first;
-    final nextItem = null; //items.length > 1 ? items[1] : null;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.largeSpacing,
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              clipBehavior: Clip.none,
-              children: [
-                if (nextItem != null)
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: AspectRatio(
-                      aspectRatio: 2 / 3,
-                      child: DeclutterCard(
-                        item: nextItem,
-                        isTopCard: false,
-                        dragProgress: _dragProgress,
-                        onSwipeLeft: () {},
-                        onSwipeRight: () {},
-                        onSwipeUp: () {},
-                        onDragUpdate: (progress) {},
-                      ),
-                    ),
-                  ),
-                Positioned(
-                  top: Dimensions.extraLargeSpacing,
-                  left: 0,
-                  right: 0,
-                  child: AspectRatio(
-                    aspectRatio: 2 / 3,
-                    child: DeclutterCard(
-                      item: topItem,
-                      isTopCard: true,
-                      dragProgress: _dragProgress,
-                      onSwipeLeft: () {
-                        final itemId = topItem.id;
-                        if (itemId == null) return;
-                        context.read<SwipeBloc>().add(SwipeItemActioned(itemId, SwipeAction.toss));
-                      },
-                      onSwipeRight: () {
-                        final itemId = topItem.id;
-                        if (itemId == null) return;
-                        context.read<SwipeBloc>().add(SwipeItemActioned(itemId, SwipeAction.keep));
-                      },
-                      onSwipeUp: () {
-                        final itemId = topItem.id;
-                        if (itemId == null) return;
-                        context.read<SwipeBloc>().add(SwipeItemActioned(itemId, SwipeAction.move));
-                      },
-                      onDragUpdate: (progress) {
-                        setState(() {
-                          _dragProgress = progress;
-                        });
-                        Log.debug("Drag progress: $progress");
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

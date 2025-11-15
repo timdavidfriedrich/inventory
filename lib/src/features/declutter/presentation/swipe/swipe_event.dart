@@ -11,7 +11,7 @@ class SwipeCurrentItemRequested extends SwipeEvent {
 }
 
 class SwipeItemActioned extends SwipeEvent {
-  final int itemId;
+  final int? itemId;
   final SwipeAction action;
   const SwipeItemActioned(this.itemId, this.action);
 }

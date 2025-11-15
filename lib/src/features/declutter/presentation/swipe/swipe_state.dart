@@ -13,15 +13,17 @@ class SwipeLoading extends SwipeState {
 }
 
 class SwipeItemLoadSuccess extends SwipeState {
-  final Item item;
+  final List<Item> items;
   final int currentIndex;
-  final int totalItems;
 
   const SwipeItemLoadSuccess({
-    required this.item,
+    required this.items,
     required this.currentIndex,
-    required this.totalItems,
   });
+
+  Item get currentItem => items[currentIndex];
+  int get totalItems => items.length;
+  List<Item> get remainingItems => items.sublist(currentIndex);
 }
 
 class SwipeSessionFinished extends SwipeState {
