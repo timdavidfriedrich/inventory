@@ -19,6 +19,9 @@ class ItemRepositoryImpl implements ItemRepository {
   Stream<AppResult<List<Item>>> watchItems() {
     return _localDataSource.watchItems().map((ldbItems) {
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
+      if (items.isEmpty) {
+        return AppResult<List<Item>>.empty();
+      }
       return AppResult.success(items);
     }).handleError((error, stackTrace) {
       Log.error("Error in watchItems stream", exception: error);
@@ -31,6 +34,9 @@ class ItemRepositoryImpl implements ItemRepository {
     try {
       final ldbItems = await _localDataSource.getDueItems(maxCount);
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
+      if (items.isEmpty) {
+        return AppResult<List<Item>>.empty();
+      }
       return AppResult.success(items);
     } on Exception catch (e) {
       return AppResult.error(e);
@@ -42,6 +48,9 @@ class ItemRepositoryImpl implements ItemRepository {
     try {
       final ldbItems = await _localDataSource.getItemsByLocationId(id);
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
+      if (items.isEmpty) {
+        return AppResult<List<Item>>.empty();
+      }
       return AppResult.success(items);
     } on Exception catch (e) {
       return AppResult.error(e);
@@ -53,9 +62,29 @@ class ItemRepositoryImpl implements ItemRepository {
     try {
       final ldbItems = await _localDataSource.getItemsByTag(tag);
       final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
+      if (items.isEmpty) {
+        return AppResult<List<Item>>.empty();
+      }
       return AppResult.success(items);
     } on Exception catch (e) {
       return AppResult.error(e);
+    }
+  }
+
+  @override
+  Future<AppResult<List<Item>>> getItemsByIds(List<int> ids) async {
+    try {
+      if (ids.isEmpty) {
+        return AppResult.empty();
+      }
+      final ldbItems = await _localDataSource.getItemsByIds(ids);
+      final items = ldbItems.map((ldbItem) => ldbItem.toItem()).toList();
+      if (items.isEmpty) {
+        return AppResult<List<Item>>.empty();
+      }
+      return AppResult.success(items);
+    } catch (e) {
+      return AppResult.error(Exception(e));
     }
   }
 

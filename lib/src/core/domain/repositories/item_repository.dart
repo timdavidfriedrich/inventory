@@ -6,6 +6,7 @@ abstract interface class ItemRepository {
   Future<AppResult<List<Item>>> getDueItems(int? maxCount);
   Future<AppResult<List<Item>>> getItemsByLocationId(int id);
   Future<AppResult<List<Item>>> getItemsByTag(String tag);
+  Future<AppResult<List<Item>>> getItemsByIds(List<int> ids);
   Future<AppResult<Item?>> getItemById(int id);
   Future<AppResult<void>> saveItem(Item item);
   Future<AppResult<void>> deleteItem(Item item);

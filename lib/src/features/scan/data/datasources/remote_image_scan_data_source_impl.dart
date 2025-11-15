@@ -23,7 +23,7 @@ class RemoteImageScanDataSourceImpl implements ImageScanDataSource {
   final _apiKey = GeminiSecrets.apiKey;
   // TODO: Move _baseModelsUrl, _modelName and _functionName to a remote config
   final _baseModelsUrl = "https://generativelanguage.googleapis.com/v1beta/models";
-  final _modelName = "gemini-2.0-flash-lite";
+  final _modelName = "gemini-2.5-flash-lite";
   final _functionName = "generateContent";
 
   final _maxTokens = 512;
@@ -46,10 +46,6 @@ class RemoteImageScanDataSourceImpl implements ImageScanDataSource {
         mimeType: mimeType,
         prompt: prompt,
       );
-
-      final inputTokenCount = await _estimateTokens(prompt, imageData: imageData);
-
-      Log.hint("Request image labels using about $inputTokenCount input tokens.\nPrompt:\n$prompt");
 
       final response = await http.post(
         Uri.parse(url),
@@ -123,6 +119,18 @@ class RemoteImageScanDataSourceImpl implements ImageScanDataSource {
 
   AppResult<List<RemoteScanResult>> _parseResponse(String responseBody) {
     final jsonResponse = jsonDecode(responseBody);
+
+    final usageMetadata = jsonResponse["usageMetadata"];
+    final inputTokens = usageMetadata?["promptTokenCount"];
+    final outputTokens = usageMetadata?["candidatesTokenCount"];
+    final totalTokens = usageMetadata?["totalTokenCount"];
+    Log.hint(
+      "Gemini API token usage: "
+      "input=$inputTokens, "
+      "output=$outputTokens, "
+      "total=$totalTokens.",
+    );
+
     final List? candidates = jsonResponse["candidates"];
 
     if (candidates == null || candidates.isEmpty) {
@@ -139,11 +147,6 @@ class RemoteImageScanDataSourceImpl implements ImageScanDataSource {
     }
 
     final outputText = parts.first["text"];
-
-    _estimateTokens(outputText).then((estimatedTokens) {
-      Log.hint(
-          "Received image labels using about $estimatedTokens output tokens.\nResponse:\n$outputText");
-    });
 
     final jsonString = _extractJsonString(outputText);
     final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>?;
@@ -162,36 +165,6 @@ class RemoteImageScanDataSourceImpl implements ImageScanDataSource {
     final startIndex = rawResponse.indexOf("{");
     final endIndex = rawResponse.lastIndexOf("}");
     return rawResponse.substring(startIndex, endIndex + 1);
-  }
-
-  Future<int> _estimateTokens(
-    String prompt, {
-    Uint8List? imageData,
-  }) async {
-    final int textTokens = (prompt.length / 4).ceil();
-    final int bufferedText = (textTokens * 1.1).ceil();
-
-    int imageTokens = 0;
-    if (imageData != null) {
-      Image decoded = await decodeImageFromListAsync(imageData);
-      final int width = decoded.width;
-      final int height = decoded.height;
-
-      // Determine tile count based on Gemini rules:
-      // If both ≤ 384px => 1 tile (258 tokens), else
-      // tiles_w = ceil(w / 768), tiles_h = ceil(h / 768)
-      int tiles;
-      if (width <= 384 && height <= 384) {
-        tiles = 1;
-      } else {
-        final int tilesW = ((width + 767) ~/ 768);
-        final int tilesH = ((height + 767) ~/ 768);
-        tiles = tilesW * tilesH;
-      }
-      imageTokens = tiles * 258;
-    }
-
-    return bufferedText + imageTokens;
   }
 
   Future<Image> decodeImageFromListAsync(Uint8List bytes) {

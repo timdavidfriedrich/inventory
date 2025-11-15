@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:inventory/src/core/domain/entities/app_result.dart';
+import 'package:inventory/src/core/domain/usecases/item/get_items_by_id_use_case.dart';
 import 'package:inventory/src/features/declutter/domain/entities/declutter_session.dart';
 import 'package:inventory/src/features/declutter/domain/usecases/declutter_session/delete_session_use_case.dart';
-import 'package:inventory/src/features/declutter/domain/usecases/declutter_session/get_current_session_item_use_case.dart';
 import 'package:inventory/src/features/declutter/domain/usecases/declutter_session/get_session_by_id_use_case.dart';
 import 'package:inventory/src/features/declutter/domain/usecases/item/mark_to_keep_use_case.dart';
 import 'package:inventory/src/features/declutter/domain/usecases/item/mark_to_move_use_case.dart';
@@ -15,7 +15,7 @@ import 'package:log/log.dart';
 
 @injectable
 class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
-  final GetCurrentSessionItemUseCase _getCurrentItemUseCase;
+  final GetItemsByIdsUseCase _getItemsByIdsUseCase;
   final GetSessionByIdUseCase _getSessionByIdUseCase;
   final DeleteSessionUseCase _deleteSessionUseCase;
   final UpdateSessionUseCase _updateSessionUseCase;
@@ -26,7 +26,7 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
   final int? sessionId;
 
   SwipeBloc(
-    this._getCurrentItemUseCase,
+    this._getItemsByIdsUseCase,
     this._getSessionByIdUseCase,
     this._deleteSessionUseCase,
     this._updateSessionUseCase,
@@ -74,23 +74,22 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
       return;
     }
 
-    final itemResult = await _getCurrentItemUseCase(id);
-    if (itemResult is Error) {
-      Log.error("SwipeBloc: Failed to load current item", exception: (itemResult as Error).error);
-      emit(SwipeError((itemResult as Error).error.toString()));
+    final itemsResult = await _getItemsByIdsUseCase(session.itemIds);
+    if (itemsResult is Error) {
+      Log.error("SwipeBloc: Failed to load items", exception: (itemsResult as Error).error);
+      emit(SwipeError((itemsResult as Error).error.toString()));
       return;
     }
 
-    final item = (itemResult as Success).value;
-    if (item == null) {
+    final items = (itemsResult as Success).value;
+    if (items.isEmpty || session.progressIndex >= items.length) {
       emit(const SwipeSessionFinished());
       return;
     }
 
     emit(SwipeItemLoadSuccess(
-      item: item,
+      items: items,
       currentIndex: session.progressIndex,
-      totalItems: session.itemIds.length,
     ));
   }
 
@@ -113,9 +112,9 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
     }
     final successState = state as SwipeItemLoadSuccess;
     final result = switch (event.action) {
-      SwipeAction.keep => await _markToKeepUseCase(successState.item),
-      SwipeAction.toss => await _markToTossUseCase(successState.item),
-      SwipeAction.move => await _markToMoveUseCase(successState.item),
+      SwipeAction.keep => await _markToKeepUseCase(successState.currentItem),
+      SwipeAction.toss => await _markToTossUseCase(successState.currentItem),
+      SwipeAction.move => await _markToMoveUseCase(successState.currentItem),
     };
 
     if (result is Error) {
@@ -132,9 +131,7 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
           progressIndex: session.progressIndex + 1,
           updatedAt: DateTime.now(),
         );
-        await _updateSessionUseCase(updatedSession).then((_) {
-          add(const SwipeCurrentItemRequested());
-        });
+        await _updateSessionUseCase(updatedSession);
       }
     }
   }

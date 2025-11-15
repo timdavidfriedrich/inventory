@@ -34,7 +34,9 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   @override
   Future<List<LdbItem>> getItemsByLocationId(int id) async {
     final query = _itemBox
-        .query(LdbItem_.location.equals(id) | LdbItem_.isArchived.equals(false) | LdbItem_.currentTask.isNull())
+        .query(LdbItem_.location.equals(id) |
+            LdbItem_.isArchived.equals(false) |
+            LdbItem_.currentTask.isNull())
         .build();
     return query.find();
   }
@@ -42,16 +44,25 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   @override
   Future<List<LdbItem>> getItemsByTag(String tag) async {
     final query = _itemBox
-        .query(LdbItem_.tags.containsElement(tag) | LdbItem_.isArchived.equals(false) | LdbItem_.currentTask.isNull())
+        .query(LdbItem_.tags.containsElement(tag) |
+            LdbItem_.isArchived.equals(false) |
+            LdbItem_.currentTask.isNull())
         .build();
     return query.find();
   }
 
+  @override
   Future<List<LdbItem>> getItemsByCondition(int conditionIndex) async {
-    final query = _itemBox
-        .query(LdbItem_.condition.equals(conditionIndex))
-        .build();
+    final query = _itemBox.query(LdbItem_.condition.equals(conditionIndex)).build();
     return query.find();
+  }
+
+  @override
+  Future<List<LdbItem>> getItemsByIds(List<int> ids) async {
+    if (ids.isEmpty) {
+      return [];
+    }
+    return _itemBox.getMany(ids).whereType<LdbItem>().toList();
   }
 
   @override

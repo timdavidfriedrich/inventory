@@ -27,6 +27,8 @@ import 'package:inventory/src/core/domain/usecases/item/get_all_items_use_case.d
     as _i274;
 import 'package:inventory/src/core/domain/usecases/item/get_item_by_id_use_case.dart'
     as _i989;
+import 'package:inventory/src/core/domain/usecases/item/get_items_by_id_use_case.dart'
+    as _i232;
 import 'package:inventory/src/core/domain/usecases/item/get_items_by_location_id_use_case.dart'
     as _i667;
 import 'package:inventory/src/core/domain/usecases/item/get_items_by_tag_use_case.dart'
@@ -63,8 +65,6 @@ import 'package:inventory/src/features/declutter/domain/usecases/item/mark_to_mo
     as _i468;
 import 'package:inventory/src/features/declutter/domain/usecases/item/mark_to_toss_use_case.dart'
     as _i944;
-import 'package:inventory/src/features/declutter/presentation/declutter_bloc.dart'
-    as _i10;
 import 'package:inventory/src/features/declutter/presentation/hub/hub_bloc.dart'
     as _i1006;
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_bloc.dart'
@@ -133,6 +133,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i413.SaveItemUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i989.GetItemByIdUseCase>(
         () => _i989.GetItemByIdUseCase(repository: gh<_i568.ItemRepository>()));
+    gh.factory<_i232.GetItemsByIdsUseCase>(() =>
+        _i232.GetItemsByIdsUseCase(repository: gh<_i568.ItemRepository>()));
     gh.factory<_i483.CreateSessionUseCase>(() => _i483.CreateSessionUseCase(
           itemRepository: gh<_i568.ItemRepository>(),
           sessionRepository: gh<_i314.DeclutterSessionRepository>(),
@@ -156,20 +158,25 @@ extension GetItInjectableX on _i174.GetIt {
               sessionRepository: gh<_i314.DeclutterSessionRepository>(),
               itemRepository: gh<_i568.ItemRepository>(),
             ));
-    gh.factory<_i10.DeclutterBloc>(
-        () => _i10.DeclutterBloc(gh<_i568.ItemRepository>()));
     gh.factory<_i468.MarkToMoveUseCase>(
         () => _i468.MarkToMoveUseCase(gh<_i568.ItemRepository>()));
     gh.factory<_i947.MarkToKeepUseCase>(
         () => _i947.MarkToKeepUseCase(gh<_i568.ItemRepository>()));
     gh.factory<_i944.MarkToTossUseCase>(
         () => _i944.MarkToTossUseCase(gh<_i568.ItemRepository>()));
+    gh.factory<_i364.OverviewBloc>(
+        () => _i364.OverviewBloc(gh<_i274.GetAllItemsUseCase>()));
+    gh.factory<_i1006.HubBloc>(() => _i1006.HubBloc(
+          gh<_i483.CreateSessionUseCase>(),
+          gh<_i194.DeleteSessionUseCase>(),
+          gh<_i94.WatchActiveSessionsUseCase>(),
+        ));
     gh.factoryParam<_i970.SwipeBloc, int?, dynamic>((
       sessionId,
       _,
     ) =>
         _i970.SwipeBloc(
-          gh<_i806.GetCurrentSessionItemUseCase>(),
+          gh<_i232.GetItemsByIdsUseCase>(),
           gh<_i379.GetSessionByIdUseCase>(),
           gh<_i194.DeleteSessionUseCase>(),
           gh<_i156.UpdateSessionUseCase>(),
@@ -177,13 +184,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i468.MarkToMoveUseCase>(),
           gh<_i944.MarkToTossUseCase>(),
           sessionId: sessionId,
-        ));
-    gh.factory<_i364.OverviewBloc>(
-        () => _i364.OverviewBloc(gh<_i274.GetAllItemsUseCase>()));
-    gh.factory<_i1006.HubBloc>(() => _i1006.HubBloc(
-          gh<_i483.CreateSessionUseCase>(),
-          gh<_i194.DeleteSessionUseCase>(),
-          gh<_i94.WatchActiveSessionsUseCase>(),
         ));
     return this;
   }
