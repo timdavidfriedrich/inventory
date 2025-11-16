@@ -14,8 +14,7 @@ import 'package:inventory/src/features/declutter/presentation/swipe/swipe_bloc.d
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_event.dart';
 import 'package:inventory/src/features/declutter/presentation/swipe/swipe_state.dart';
 import 'package:inventory/src/features/declutter/presentation/swipe/widgets/declutter_swipe_card.dart';
-import 'package:inventory/src/features/declutter/presentation/swipe/widgets/declutter_swipe_stack.dart';
-import 'package:inventory/src/features/declutter/presentation/swipe/widgets/enums.dart';
+import 'package:inventory/src/features/declutter/presentation/swipe/widgets/declutter_swipe_stack/declutter_swipe_stack.dart';
 import 'package:log/log.dart';
 
 class DeclutterSwipeScreen extends StatelessWidget {
@@ -88,16 +87,9 @@ class _DeclutterSwipeScreen extends HookWidget {
                   child: DeclutterSwipeStack(
                     controller: swipeController,
                     cardCount: state.remainingItems.length,
-                    swipeOptions: SwipeOptions.only(left: true, right: true, up: true),
-                    onSwipeEnd: (previousIndex, targetIndex, activity) {
-                      if (previousIndex == targetIndex) return;
-                      return switch (activity.direction) {
-                        AxisDirection.left => toss(),
-                        AxisDirection.up => move(),
-                        AxisDirection.right => keep(),
-                        AxisDirection.down => {},
-                      };
-                    },
+                    onSwipedLeft: (_) => toss(),
+                    onSwipedUp: (_) => move(),
+                    onSwipedRight: (_) => keep(),
                     cardBuilder: (context, index) {
                       return DeclutterSwipeCard(
                         item: state.remainingItems[index],
