@@ -93,13 +93,38 @@ class _DeclutterSwipeScreen extends HookWidget {
                     cardBuilder: (context, index) {
                       return DeclutterSwipeCard(
                         item: state.remainingItems[index],
-                        onToss: swipeController.swipeLeft,
-                        onMove: swipeController.swipeUp,
-                        onKeep: swipeController.swipeRight,
                       );
                     },
                   ),
                 ),
+              ),
+              const SizedBox(height: Dimensions.largeSpacing),
+              // TOOO FOR AI: Replace with new button row design
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: swipeController.swipeLeft,
+                      // TODO: Localize
+                      child: const Text("Toss"),
+                    ),
+                  ),
+                  const SizedBox(width: Dimensions.mediumSpacing),
+                  OutlinedButton(
+                    onPressed: swipeController.swipeUp,
+                    // TODO: Localize
+                    child: Text("Move"),
+                  ),
+                  const SizedBox(width: Dimensions.mediumSpacing),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: swipeController.swipeRight,
+                      // TODO: Localize
+                      child: const Text("Keep"),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -7,15 +7,9 @@ const _cardPadding = Dimensions.semiLargeSpacing;
 
 class DeclutterSwipeCard extends StatelessWidget {
   final Item item;
-  final VoidCallback onToss;
-  final VoidCallback onMove;
-  final VoidCallback onKeep;
   const DeclutterSwipeCard({
     super.key,
     required this.item,
-    required this.onToss,
-    required this.onMove,
-    required this.onKeep,
   });
 
   @override
@@ -86,33 +80,6 @@ class DeclutterSwipeCard extends StatelessWidget {
                   // TODO: Replace with actual room name
                   "Badezimmer",
                   style: context.t.titleMedium?.copyWith(color: onCardColor),
-                ),
-                const SizedBox(height: Dimensions.largeSpacing),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: onToss,
-                        // TODO: Localize
-                        child: const Text("Toss"),
-                      ),
-                    ),
-                    const SizedBox(width: Dimensions.mediumSpacing),
-                    OutlinedButton(
-                      onPressed: onMove,
-                      // TODO: Localize
-                      child: Text("Move", style: TextStyle(color: onCardColor)),
-                    ),
-                    const SizedBox(width: Dimensions.mediumSpacing),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: onKeep,
-                        // TODO: Localize
-                        child: const Text("Keep"),
-                      ),
-                    ),
-                  ],
                 ),
                 const SizedBox(height: Dimensions.largeSpacing),
               ],
