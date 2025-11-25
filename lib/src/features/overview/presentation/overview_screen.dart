@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inventory/config/theme/shapes/expressive_shapes.dart';
 import 'package:inventory/service_locator.dart';
 import 'package:inventory/src/core/presentation/coordinators/capture_flow_coordinator.dart';
 import 'package:inventory/src/core/presentation/tab_screen_mixin.dart';
@@ -12,6 +13,16 @@ import 'package:inventory/src/core/presentation/extensions/context_extensions.da
 import 'package:inventory/src/core/presentation/widgets/vertical_error_widget.dart';
 import 'package:inventory/src/features/overview/presentation/overview_bloc.dart';
 import 'package:inventory/src/features/overview/presentation/overview_state.dart';
+
+final _listTileShapes = [
+  ExpressiveShapes.bun,
+  ExpressiveShapes.eightLeafClover,
+  ExpressiveShapes.fourLeafClover,
+  ExpressiveShapes.fourSidedCookie,
+  ExpressiveShapes.pill,
+  ExpressiveShapes.sixSidedCookie,
+  ExpressiveShapes.slanted,
+];
 
 class OverviewScreen extends StatelessWidget with TabScreen {
   const OverviewScreen({super.key});
@@ -46,8 +57,9 @@ class OverviewScreen extends StatelessWidget with TabScreen {
                       padding: const EdgeInsets.all(Dimensions.smallSpacing),
                       child: ListTile(
                         onTap: () => DetailsRoute(id: item.id).push(context),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(Dimensions.smallBorderRadius),
+                        leading: Material(
+                          shape: _listTileShapes[index % _listTileShapes.length],
+                          clipBehavior: Clip.antiAlias,
                           child: item.image != null
                               ? Image.memory(item.image!)
                               : AspectRatio(
