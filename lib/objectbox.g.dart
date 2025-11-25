@@ -20,6 +20,7 @@ import 'src/core/data/models/ldb_location.dart';
 import 'src/core/data/models/ldb_move_task.dart';
 import 'src/core/data/models/ldb_room.dart';
 import 'src/core/data/models/ldb_toss_task.dart';
+import 'src/features/declutter/data/models/ldb_declutter_session.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -69,7 +70,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 1080030442287171865),
     name: 'LdbItem',
-    lastPropertyId: const obx_int.IdUid(10, 2443857576129355101),
+    lastPropertyId: const obx_int.IdUid(12, 10699745353897243),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -126,6 +127,18 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(10, 2443857576129355101),
         name: 'isArchived',
         type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 6940683992444419409),
+        name: 'lastDeclutter',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 10699745353897243),
+        name: 'currentTask',
+        type: 5,
         flags: 0,
       ),
     ],
@@ -250,6 +263,58 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(7, 277726055122569338),
+    name: 'LdbDeclutterSession',
+    lastPropertyId: const obx_int.IdUid(9, 4163772680543485479),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5511349800817042860),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 2261336612012685964),
+        name: 'contextName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 1404582776780181268),
+        name: 'itemIds',
+        type: 27,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 221488640619911087),
+        name: 'progressIndex',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 1459170526395884318),
+        name: 'status',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 417612234669780669),
+        name: 'createdAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 4163772680543485479),
+        name: 'updatedAt',
+        type: 10,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -290,13 +355,17 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(6, 7880473287807900153),
+    lastEntityId: const obx_int.IdUid(7, 277726055122569338),
     lastIndexId: const obx_int.IdUid(5, 2829190920006502094),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [1159076210894445184],
+    retiredPropertyUids: const [
+      1159076210894445184,
+      2662456712027921786,
+      3124472288928982691,
+    ],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -386,7 +455,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final suggestedTagsOffset = fbb.writeList(
           object.suggestedTags.map(fbb.writeString).toList(growable: false),
         );
-        fbb.startTable(11);
+        fbb.startTable(13);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(3, imageBytesOffset);
@@ -396,12 +465,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(7, notesOffset);
         fbb.addOffset(8, suggestedTagsOffset);
         fbb.addBool(9, object.isArchived);
+        fbb.addInt64(10, object.lastDeclutter?.millisecondsSinceEpoch);
+        fbb.addInt32(11, object.currentTask);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
+        final lastDeclutterValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          24,
+        );
         final idParam = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -437,6 +513,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
           rootOffset,
           14,
         );
+        final currentTaskParam = const fb.Int32Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          26,
+        );
+        final lastDeclutterParam = lastDeclutterValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(lastDeclutterValue);
         final object = LdbItem(
           id: idParam,
           isArchived: isArchivedParam,
@@ -446,6 +530,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           tags: tagsParam,
           suggestedTags: suggestedTagsParam,
           condition: conditionParam,
+          currentTask: currentTaskParam,
+          lastDeclutter: lastDeclutterParam,
         );
         object.location.targetId = const fb.Int64Reader().vTableGet(
           buffer,
@@ -633,6 +719,85 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    LdbDeclutterSession: obx_int.EntityDefinition<LdbDeclutterSession>(
+      model: _entities[6],
+      toOneRelations: (LdbDeclutterSession object) => [],
+      toManyRelations: (LdbDeclutterSession object) => {},
+      getId: (LdbDeclutterSession object) => object.id,
+      setId: (LdbDeclutterSession object, int id) {
+        object.id = id;
+      },
+      objectToFB: (LdbDeclutterSession object, fb.Builder fbb) {
+        final contextNameOffset = fbb.writeString(object.contextName);
+        final itemIdsOffset = fbb.writeListInt64(object.itemIds);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(3, contextNameOffset);
+        fbb.addOffset(4, itemIdsOffset);
+        fbb.addInt64(5, object.progressIndex);
+        fbb.addInt32(6, object.status);
+        fbb.addInt64(7, object.createdAt?.millisecondsSinceEpoch);
+        fbb.addInt64(8, object.updatedAt?.millisecondsSinceEpoch);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final createdAtValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          18,
+        );
+        final updatedAtValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          20,
+        );
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final contextNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final itemIdsParam = const fb.ListReader<int>(
+          fb.Int64Reader(),
+          lazy: false,
+        ).vTableGet(buffer, rootOffset, 12, []);
+        final progressIndexParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          14,
+          0,
+        );
+        final statusParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          16,
+          0,
+        );
+        final createdAtParam = createdAtValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(createdAtValue);
+        final updatedAtParam = updatedAtValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(updatedAtValue);
+        final object = LdbDeclutterSession(
+          id: idParam,
+          contextName: contextNameParam,
+          itemIds: itemIdsParam,
+          progressIndex: progressIndexParam,
+          status: statusParam,
+          createdAt: createdAtParam,
+          updatedAt: updatedAtParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -712,6 +877,16 @@ class LdbItem_ {
   static final isArchived = obx.QueryBooleanProperty<LdbItem>(
     _entities[1].properties[8],
   );
+
+  /// See [LdbItem.lastDeclutter].
+  static final lastDeclutter = obx.QueryDateProperty<LdbItem>(
+    _entities[1].properties[9],
+  );
+
+  /// See [LdbItem.currentTask].
+  static final currentTask = obx.QueryIntegerProperty<LdbItem>(
+    _entities[1].properties[10],
+  );
 }
 
 /// [LdbLocation] entity fields to define ObjectBox queries.
@@ -783,5 +958,43 @@ class LdbTossTask_ {
   /// See [LdbTossTask.item].
   static final item = obx.QueryRelationToOne<LdbTossTask, LdbItem>(
     _entities[5].properties[1],
+  );
+}
+
+/// [LdbDeclutterSession] entity fields to define ObjectBox queries.
+class LdbDeclutterSession_ {
+  /// See [LdbDeclutterSession.id].
+  static final id = obx.QueryIntegerProperty<LdbDeclutterSession>(
+    _entities[6].properties[0],
+  );
+
+  /// See [LdbDeclutterSession.contextName].
+  static final contextName = obx.QueryStringProperty<LdbDeclutterSession>(
+    _entities[6].properties[1],
+  );
+
+  /// See [LdbDeclutterSession.itemIds].
+  static final itemIds = obx.QueryIntegerVectorProperty<LdbDeclutterSession>(
+    _entities[6].properties[2],
+  );
+
+  /// See [LdbDeclutterSession.progressIndex].
+  static final progressIndex = obx.QueryIntegerProperty<LdbDeclutterSession>(
+    _entities[6].properties[3],
+  );
+
+  /// See [LdbDeclutterSession.status].
+  static final status = obx.QueryIntegerProperty<LdbDeclutterSession>(
+    _entities[6].properties[4],
+  );
+
+  /// See [LdbDeclutterSession.createdAt].
+  static final createdAt = obx.QueryDateProperty<LdbDeclutterSession>(
+    _entities[6].properties[5],
+  );
+
+  /// See [LdbDeclutterSession.updatedAt].
+  static final updatedAt = obx.QueryDateProperty<LdbDeclutterSession>(
+    _entities[6].properties[6],
   );
 }

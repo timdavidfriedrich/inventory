@@ -112,6 +112,31 @@ class _$SuccessCopyWithImpl<T, $Res> implements $SuccessCopyWith<T, $Res> {
 
 /// @nodoc
 
+class Empty<T> with DiagnosticableTreeMixin implements AppResult<T> {
+  const Empty();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties..add(DiagnosticsProperty('type', 'AppResult<$T>.empty'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Empty<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AppResult<$T>.empty()';
+  }
+}
+
+/// @nodoc
+
 class Error<T> with DiagnosticableTreeMixin implements AppResult<T> {
   const Error(this.error);
 

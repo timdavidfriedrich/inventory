@@ -40,6 +40,9 @@ class AppTheme {
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: colorScheme.surface,
       ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        year2023: false,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: colorScheme.surfaceContainer,

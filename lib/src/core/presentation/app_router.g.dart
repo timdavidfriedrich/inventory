@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
       $cameraRoute,
       $scanRoute,
       $settingsRoute,
+      $declutterSwipeRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -218,6 +219,43 @@ mixin _$SettingsRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/settings',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $declutterSwipeRoute => GoRouteData.$route(
+      path: '/declutter/swipe',
+      factory: _$DeclutterSwipeRoute._fromState,
+    );
+
+mixin _$DeclutterSwipeRoute on GoRouteData {
+  static DeclutterSwipeRoute _fromState(GoRouterState state) =>
+      DeclutterSwipeRoute(
+        sessionId: _$convertMapValue(
+            'session-id', state.uri.queryParameters, int.tryParse),
+      );
+
+  DeclutterSwipeRoute get _self => this as DeclutterSwipeRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/declutter/swipe',
+        queryParams: {
+          if (_self.sessionId != null)
+            'session-id': _self.sessionId!.toString(),
+        },
       );
 
   @override

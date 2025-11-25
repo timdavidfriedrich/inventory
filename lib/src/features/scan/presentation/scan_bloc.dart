@@ -22,6 +22,7 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
     );
     emit(switch (results) {
       Success(:var value) => ScanSuccess(imageData: event.imageData, scanResults: value),
+      Empty() => ScanSuccess(imageData: event.imageData, scanResults: []),
       Error() => ScanError(imageData: event.imageData),
     });
   }

@@ -88,6 +88,8 @@ class _MaterialAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(AppIcons.settings(context)),
         onPressed: () => SettingsRoute().push(context),
       ),
+      title: Text(context.s.screen_overview),
+      centerTitle: true,
       actions: [
         IconButton(
           icon: Icon(AppIcons.archive(context)),
@@ -142,6 +144,7 @@ class _CupertinoAppBar extends StatelessWidget implements PreferredSizeWidget {
           AppIcons.more(context),
         ),
       ),
+      middle: Text(context.s.screen_overview),
       trailing: GestureDetector(
         onTap: () => CaptureFlowCoordinator.startCaptureFlow(context),
         child: Icon(

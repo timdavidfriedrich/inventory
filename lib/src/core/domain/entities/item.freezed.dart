@@ -24,6 +24,8 @@ mixin _$Item implements DiagnosticableTreeMixin {
   List<String> get suggestedTags;
   ItemCondition? get condition;
   Location? get location;
+  Task? get currentTask;
+  DateTime? get lastDeclutter;
 
   /// Create a copy of Item
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +46,9 @@ mixin _$Item implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('suggestedTags', suggestedTags))
       ..add(DiagnosticsProperty('condition', condition))
-      ..add(DiagnosticsProperty('location', location));
+      ..add(DiagnosticsProperty('location', location))
+      ..add(DiagnosticsProperty('currentTask', currentTask))
+      ..add(DiagnosticsProperty('lastDeclutter', lastDeclutter));
   }
 
   @override
@@ -64,7 +68,11 @@ mixin _$Item implements DiagnosticableTreeMixin {
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            (identical(other.currentTask, currentTask) ||
+                other.currentTask == currentTask) &&
+            (identical(other.lastDeclutter, lastDeclutter) ||
+                other.lastDeclutter == lastDeclutter));
   }
 
   @override
@@ -78,11 +86,13 @@ mixin _$Item implements DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(tags),
       const DeepCollectionEquality().hash(suggestedTags),
       condition,
-      location);
+      location,
+      currentTask,
+      lastDeclutter);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location, currentTask: $currentTask, lastDeclutter: $lastDeclutter)';
   }
 }
 
@@ -100,7 +110,9 @@ abstract mixin class $ItemCopyWith<$Res> {
       List<String> tags,
       List<String> suggestedTags,
       ItemCondition? condition,
-      Location? location});
+      Location? location,
+      Task? currentTask,
+      DateTime? lastDeclutter});
 
   $LocationCopyWith<$Res>? get location;
 }
@@ -126,6 +138,8 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
     Object? suggestedTags = null,
     Object? condition = freezed,
     Object? location = freezed,
+    Object? currentTask = freezed,
+    Object? lastDeclutter = freezed,
   }) {
     return _then(_self.copyWith(
       id: freezed == id
@@ -164,6 +178,14 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
           ? _self.location
           : location // ignore: cast_nullable_to_non_nullable
               as Location?,
+      currentTask: freezed == currentTask
+          ? _self.currentTask
+          : currentTask // ignore: cast_nullable_to_non_nullable
+              as Task?,
+      lastDeclutter: freezed == lastDeclutter
+          ? _self.lastDeclutter
+          : lastDeclutter // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 
@@ -194,7 +216,9 @@ class _Item with DiagnosticableTreeMixin implements Item {
       final List<String> tags = const [],
       final List<String> suggestedTags = const [],
       this.condition,
-      this.location})
+      this.location,
+      this.currentTask,
+      this.lastDeclutter})
       : _tags = tags,
         _suggestedTags = suggestedTags;
 
@@ -232,6 +256,10 @@ class _Item with DiagnosticableTreeMixin implements Item {
   final ItemCondition? condition;
   @override
   final Location? location;
+  @override
+  final Task? currentTask;
+  @override
+  final DateTime? lastDeclutter;
 
   /// Create a copy of Item
   /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +281,9 @@ class _Item with DiagnosticableTreeMixin implements Item {
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('suggestedTags', suggestedTags))
       ..add(DiagnosticsProperty('condition', condition))
-      ..add(DiagnosticsProperty('location', location));
+      ..add(DiagnosticsProperty('location', location))
+      ..add(DiagnosticsProperty('currentTask', currentTask))
+      ..add(DiagnosticsProperty('lastDeclutter', lastDeclutter));
   }
 
   @override
@@ -273,7 +303,11 @@ class _Item with DiagnosticableTreeMixin implements Item {
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            (identical(other.currentTask, currentTask) ||
+                other.currentTask == currentTask) &&
+            (identical(other.lastDeclutter, lastDeclutter) ||
+                other.lastDeclutter == lastDeclutter));
   }
 
   @override
@@ -287,11 +321,13 @@ class _Item with DiagnosticableTreeMixin implements Item {
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_suggestedTags),
       condition,
-      location);
+      location,
+      currentTask,
+      lastDeclutter);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location)';
+    return 'Item(id: $id, isArchived: $isArchived, name: $name, notes: $notes, image: $image, tags: $tags, suggestedTags: $suggestedTags, condition: $condition, location: $location, currentTask: $currentTask, lastDeclutter: $lastDeclutter)';
   }
 }
 
@@ -310,7 +346,9 @@ abstract mixin class _$ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
       List<String> tags,
       List<String> suggestedTags,
       ItemCondition? condition,
-      Location? location});
+      Location? location,
+      Task? currentTask,
+      DateTime? lastDeclutter});
 
   @override
   $LocationCopyWith<$Res>? get location;
@@ -337,6 +375,8 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
     Object? suggestedTags = null,
     Object? condition = freezed,
     Object? location = freezed,
+    Object? currentTask = freezed,
+    Object? lastDeclutter = freezed,
   }) {
     return _then(_Item(
       id: freezed == id
@@ -375,6 +415,14 @@ class __$ItemCopyWithImpl<$Res> implements _$ItemCopyWith<$Res> {
           ? _self.location
           : location // ignore: cast_nullable_to_non_nullable
               as Location?,
+      currentTask: freezed == currentTask
+          ? _self.currentTask
+          : currentTask // ignore: cast_nullable_to_non_nullable
+              as Task?,
+      lastDeclutter: freezed == lastDeclutter
+          ? _self.lastDeclutter
+          : lastDeclutter // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 

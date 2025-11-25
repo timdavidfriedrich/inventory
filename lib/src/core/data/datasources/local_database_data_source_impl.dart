@@ -1,12 +1,11 @@
 import 'package:inventory/src/core/data/datasources/local_database.dart';
 import 'package:inventory/objectbox.g.dart';
-import 'package:objectbox/objectbox.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart' as inject;
 
 import 'package:inventory/src/core/data/datasources/local_database_data_source.dart';
 import 'package:inventory/src/core/data/models/ldb_item.dart';
 
-@LazySingleton(as: LocalDatabaseDataSource)
+@inject.LazySingleton(as: LocalDatabaseDataSource)
 class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   final LocalDatabase _localDatabase;
   late final Box<LdbItem> _itemBox;
@@ -20,6 +19,50 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   @override
   Stream<List<LdbItem>> watchItems() {
     return _itemBox.query().watch(triggerImmediately: true).map((query) => query.find());
+  }
+
+  @override
+  Future<List<LdbItem>> getDueItems(int? maxCount) async {
+    final query = _itemBox
+        .query(LdbItem_.isArchived.equals(false) | LdbItem_.currentTask.isNull())
+        .order(LdbItem_.lastDeclutter, flags: Order.descending | Order.nullsLast)
+        .build()
+      ..limit = maxCount ?? 999;
+    return query.find();
+  }
+
+  @override
+  Future<List<LdbItem>> getItemsByLocationId(int id) async {
+    final query = _itemBox
+        .query(LdbItem_.location.equals(id) |
+            LdbItem_.isArchived.equals(false) |
+            LdbItem_.currentTask.isNull())
+        .build();
+    return query.find();
+  }
+
+  @override
+  Future<List<LdbItem>> getItemsByTag(String tag) async {
+    final query = _itemBox
+        .query(LdbItem_.tags.containsElement(tag) |
+            LdbItem_.isArchived.equals(false) |
+            LdbItem_.currentTask.isNull())
+        .build();
+    return query.find();
+  }
+
+  @override
+  Future<List<LdbItem>> getItemsByCondition(int conditionIndex) async {
+    final query = _itemBox.query(LdbItem_.condition.equals(conditionIndex)).build();
+    return query.find();
+  }
+
+  @override
+  Future<List<LdbItem>> getItemsByIds(List<int> ids) async {
+    if (ids.isEmpty) {
+      return [];
+    }
+    return _itemBox.getMany(ids).whereType<LdbItem>().toList();
   }
 
   @override

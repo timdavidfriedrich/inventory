@@ -42,7 +42,7 @@
     },
     {
       "id": "2:1080030442287171865",
-      "lastPropertyId": "10:2443857576129355101",
+      "lastPropertyId": "12:10699745353897243",
       "name": "LdbItem",
       "properties": [
         {
@@ -93,6 +93,16 @@
           "id": "10:2443857576129355101",
           "name": "isArchived",
           "type": 1
+        },
+        {
+          "id": "11:6940683992444419409",
+          "name": "lastDeclutter",
+          "type": 10
+        },
+        {
+          "id": "12:10699745353897243",
+          "name": "currentTask",
+          "type": 5
         }
       ],
       "relations": []
@@ -201,9 +211,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "7:277726055122569338",
+      "lastPropertyId": "9:4163772680543485479",
+      "name": "LdbDeclutterSession",
+      "properties": [
+        {
+          "id": "1:5511349800817042860",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:2261336612012685964",
+          "name": "contextName",
+          "type": 9
+        },
+        {
+          "id": "5:1404582776780181268",
+          "name": "itemIds",
+          "type": 27
+        },
+        {
+          "id": "6:221488640619911087",
+          "name": "progressIndex",
+          "type": 6
+        },
+        {
+          "id": "7:1459170526395884318",
+          "name": "status",
+          "type": 5
+        },
+        {
+          "id": "8:417612234669780669",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "9:4163772680543485479",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "6:7880473287807900153",
+  "lastEntityId": "7:277726055122569338",
   "lastIndexId": "5:2829190920006502094",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -212,7 +266,9 @@
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
-    1159076210894445184
+    1159076210894445184,
+    2662456712027921786,
+    3124472288928982691
   ],
   "retiredRelationUids": [],
   "version": 1

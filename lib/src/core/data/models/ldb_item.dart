@@ -18,6 +18,12 @@ class LdbItem {
 
   final location = ToOne<LdbLocation>();
 
+  @Property(type: PropertyType.int)
+  int? currentTask;
+
+  @Property(type: PropertyType.date)
+  DateTime? lastDeclutter;
+
   LdbItem({
     this.id = 0,
     this.isArchived = false,
@@ -27,5 +33,7 @@ class LdbItem {
     this.tags = const [],
     this.suggestedTags = const [],
     this.condition,
+    this.currentTask,
+    this.lastDeclutter,
   });
 }
