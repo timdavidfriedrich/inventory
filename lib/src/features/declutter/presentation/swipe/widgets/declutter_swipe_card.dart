@@ -24,7 +24,10 @@ class DeclutterSwipeCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Dimensions.mediumBorderRadius),
+      ),
       color: cardColor,
       clipBehavior: Clip.antiAlias,
       child: Column(

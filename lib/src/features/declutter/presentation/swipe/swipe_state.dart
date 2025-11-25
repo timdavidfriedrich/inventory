@@ -21,9 +21,20 @@ class SwipeItemLoadSuccess extends SwipeState {
     required this.currentIndex,
   });
 
+  bool get canUndo => currentIndex > 0;
+
   Item get currentItem => items[currentIndex];
   int get totalItems => items.length;
-  List<Item> get remainingItems => items.sublist(currentIndex);
+
+  SwipeItemLoadSuccess copyWith({
+    List<Item>? items,
+    int? currentIndex,
+  }) {
+    return SwipeItemLoadSuccess(
+      items: items ?? this.items,
+      currentIndex: currentIndex ?? this.currentIndex,
+    );
+  }
 }
 
 class SwipeSessionFinished extends SwipeState {

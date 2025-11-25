@@ -100,4 +100,8 @@ class AppIcons {
   static IconData tag(BuildContext context) {
     return context.isIos ? CupertinoIcons.tag : Icons.label_outline;
   }
+
+  static IconData close(BuildContext context) {
+    return context.isIos ? CupertinoIcons.clear : Icons.close;
+  }
 }

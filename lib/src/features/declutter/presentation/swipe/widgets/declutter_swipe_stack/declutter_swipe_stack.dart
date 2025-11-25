@@ -11,12 +11,13 @@ const _threshold = 100.0;
 const _duration = Duration(milliseconds: 200);
 
 /// This implementation is inspired by and adapted from the appinio_swiper package
-/// (https://github.com/appinioGmbH/flutter_packages/tree/main/packages/appinio_swiper) 
-/// by Appinio GmbH, licensed under MIT. The core swipe mechanics, animation system, 
+/// (https://github.com/appinioGmbH/flutter_packages/tree/main/packages/appinio_swiper)
+/// by Appinio GmbH, licensed under MIT. The core swipe mechanics, animation system,
 /// and controller pattern have been modified and simplified for this specific use case.
 class DeclutterSwipeStack extends StatefulWidget {
   final IndexedWidgetBuilder cardBuilder;
   final int cardCount;
+  final int initialIndex;
   final DeclutterSwipeController? controller;
   final void Function(SwipeActivity activity)? onSwipedLeft;
   final void Function(SwipeActivity activity)? onSwipedUp;
@@ -29,6 +30,7 @@ class DeclutterSwipeStack extends StatefulWidget {
     super.key,
     required this.cardBuilder,
     required this.cardCount,
+    this.initialIndex = 0,
     this.controller,
     this.onSwipedLeft,
     this.onSwipedUp,
@@ -57,6 +59,8 @@ class _DeclutterSwipeStackState extends State<DeclutterSwipeStack> with TickerPr
       threshold: _threshold,
       maxAngleRadians: _maxAngle,
     );
+
+    _position.baseIndex = widget.initialIndex;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.controller?._attach(this);
@@ -203,7 +207,7 @@ class _DeclutterSwipeStackState extends State<DeclutterSwipeStack> with TickerPr
         // * Background card
         if (backgroundIndex < widget.cardCount)
           Transform.scale(
-            scale: 0.95 + (0.05 * progress),
+            scale: 0.90 + (0.1 * progress),
             child: Opacity(
               opacity: 0.5 + (0.5 * progress),
               child: widget.cardBuilder(context, backgroundIndex),

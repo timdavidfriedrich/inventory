@@ -111,6 +111,7 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
       return;
     }
     final successState = state as SwipeItemLoadSuccess;
+    // TODO: Implement SwipeAction.undo and SwipAction.skip
     final result = switch (event.action) {
       SwipeAction.keep => await _markToKeepUseCase(successState.currentItem),
       SwipeAction.toss => await _markToTossUseCase(successState.currentItem),
@@ -132,6 +133,15 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
           updatedAt: DateTime.now(),
         );
         await _updateSessionUseCase(updatedSession);
+
+        // TODO: Implement index bug on undo
+        // ! BUG: Always increases index, even on undo
+        final nextIndex = successState.currentIndex + 1;
+        if (nextIndex >= successState.items.length) {
+          emit(const SwipeSessionFinished());
+        } else {
+          emit(successState.copyWith(currentIndex: nextIndex));
+        }
       }
     }
   }
