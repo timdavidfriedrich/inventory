@@ -70,6 +70,7 @@ class _HubScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.largeSpacing),
         children: [
+          const SizedBox(height: Dimensions.smallSpacing),
           const _StartNewSessionTitle(),
           const SizedBox(height: Dimensions.mediumSpacing),
           const _NewSessionCard(),
